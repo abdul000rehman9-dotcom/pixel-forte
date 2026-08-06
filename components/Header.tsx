@@ -1,0 +1,333 @@
+"use client";
+
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link'; // Native Next.js Link
+
+type PageType = string;
+
+interface HeaderProps {
+  activePage: PageType;
+  setActivePage: (page: PageType) => void;
+  onContactClick: () => void;
+  transparent?: boolean;
+}
+
+interface MenuItem {
+  name: string;
+  type: 'link' | 'dropdown';
+  key?: string;
+  page?: PageType;
+  columns?: { name: string; page: PageType }[][];
+}
+
+export default function Header ({ activePage, setActivePage, onContactClick, transparent = false }: HeaderProps) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
+
+  const [isNavigating, setIsNavigating] = useState<boolean>(false);
+
+  const toggleSubMenu = (menuKey: string) => {
+    if (activeSubMenu === menuKey) {
+      setActiveSubMenu(null);
+    } else {
+      setActiveSubMenu(menuKey);
+    }
+  };
+
+  const handleNavClick = (page: PageType, e?: React.MouseEvent) => {
+    if (isNavigating) {
+      if (e) e.preventDefault();
+      return;
+    }
+    setIsNavigating(true);
+    setActivePage(page);
+    setIsOpen(false);
+    setActiveSubMenu(null);
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
+    }
+    setTimeout(() => {
+      setIsNavigating(false);
+    }, 500);
+  };
+
+
+  const menuItems: MenuItem[] = [
+    { name: 'Home', type: 'link', page: 'home' },
+    {
+      name: 'Pages',
+      type: 'dropdown',
+      key: 'pages',
+      columns: [
+        [
+          { name: 'About', page: 'about' },
+          { name: 'Team', page: 'team' },
+          { name: 'Portfolio one', page: 'portfolio-one' },
+          { name: 'Portfolio two', page: 'portfolio-two' },
+          { name: 'Portfolio three', page: 'portfolio-three' },
+        ],
+        [
+          { name: 'Pricing', page: 'pricing' },
+          { name: 'License', page: 'license' },
+          { name: 'Style guide', page: 'style-guide' },
+        ],
+      ],
+    },
+    {
+      name: 'Service',
+      type: 'dropdown',
+      key: 'service',
+      columns: [
+        [
+          { name: 'Service one', page: 'services-one' },
+          { name: 'Service two', page: 'services-two' },
+          { name: 'Service three', page: 'services-three' },
+        ]
+      ],
+    },
+    {
+      name: 'Blog',
+      type: 'dropdown',
+      key: 'blog',
+      columns: [
+        [
+          { name: 'Blog', page: 'blog' },
+          { name: 'Blog post', page: 'blog-post' },
+        ]
+      ],
+    },
+    {
+      name: 'Portfolio',
+      type: 'dropdown',
+      key: 'portfolio',
+      columns: [
+        [
+          { name: 'Portfolio one', page: 'portfolio-one' },
+          { name: 'Portfolio two', page: 'portfolio-two' },
+          { name: 'Portfolio three', page: 'portfolio-three' },
+          { name: 'Portfolio details', page: 'portfolio-details' },
+        ],
+      ],
+    },
+    { name: 'Contact', type: 'link', page: 'contact' },
+  ];
+
+  return (
+    <header className={`relative z-50 w-full ${transparent ? 'bg-transparent border-transparent' : 'border-b border-black/10 bg-[#f9f8f4]'} px-6 py-4 md:px-16 md:py-5`}>
+      <div className="mx-auto flex max-w-7xl items-center justify-between">
+        {/* Logo */}
+        <Link
+          href="/"
+          onClick={() => {
+            setIsOpen(false);
+            setActiveSubMenu(null);
+          }}
+          className="group flex items-center gap-2 cursor-pointer text-left"
+          id="header-logo-btn"
+        >
+          <motion.div
+            className="group flex items-center gap-2"
+            whileHover="hover"
+            initial="rest"
+            animate="rest"
+          >
+            {/* Orange Pf circle */}
+            <motion.span
+              variants={{ rest: { rotate: 0 }, hover: { rotate: 360 } }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="grid h-9 w-9 place-items-center rounded-full bg-[#FF5A1F] text-white font-semibold text-[13px] tracking-tight"
+            >
+              Pf
+            </motion.span>
+
+            {/* pixelforte text */}
+            <span className="text-2xl font-semibold tracking-tight text-[#111] transition-colors group-hover:text-[#FF5A1F]">
+              pixelforte
+            </span>
+          </motion.div>
+        </Link>
+
+        {/* Right Controls */}
+        <div className="flex items-center gap-4 sm:gap-5">
+          {/* Button: "Let's Collaborate" (hidden on small/mobile, visible on sm and up) */}
+          <button
+            onClick={() => {
+              onContactClick();
+              setIsOpen(false);
+            }}
+            className="group relative hidden sm:inline-flex h-[38px] items-center justify-center overflow-hidden rounded-none bg-black px-5 text-[10px] md:text-[11px] font-bold uppercase tracking-wider text-white transition-all duration-500 cursor-pointer"
+          >
+            {/* Dual sliding background (orange left, white right) */}
+            <div className="absolute inset-0 w-full h-full flex translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0">
+              <div className="w-1/2 h-full bg-[#f26b2c]" />
+              <div className="w-1/2 h-full bg-white" />
+            </div>
+
+            {/* Text Sliding Wrapper */}
+            <span className="relative z-10 block h-4 overflow-hidden">
+              <span className="block transform transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-full text-white">
+                Let&apos;s Collaborate
+              </span>
+              <span className="absolute left-0 top-0 block translate-y-full transform transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 text-black font-black">
+                Let&apos;s Collaborate
+              </span>
+            </span>
+          </button>
+
+          {/* Trigger Button (4-Dot Icon or X) */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="group flex h-8 w-8 items-center justify-center text-black transition-transform duration-200 active:scale-95 cursor-pointer"
+            aria-label="Toggle Menu"
+          >
+            {isOpen ? (
+              <svg
+                className="h-5 w-5 transition-transform duration-300 group-hover:rotate-90"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <div className="grid h-3.5 w-3.5 grid-cols-2 gap-[3px] transition-transform duration-300 group-hover:scale-110">
+                <span className="h-1.5 w-1.5 rounded-full bg-black group-hover:bg-orange-accent transition-colors" />
+                <span className="h-1.5 w-1.5 rounded-full bg-black group-hover:bg-orange-accent transition-colors" />
+                <span className="h-1.5 w-1.5 rounded-full bg-black group-hover:bg-orange-accent transition-colors" />
+                <span className="h-1.5 w-1.5 rounded-full bg-black group-hover:bg-orange-accent transition-colors" />
+              </div>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Right Aligned Dropdown Navigation Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0, scale: 0.95 }}
+            animate={{ height: 'auto', opacity: 1, scale: 1 }}
+            exit={{ height: 0, opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute right-6 top-full z-50 w-[calc(100vw-48px)] max-w-[340px] overflow-hidden rounded-2xl border border-black/10 bg-[#f9f8f4] p-6 shadow-xl md:right-16 text-left"
+          >
+            <nav className="flex flex-col gap-2">
+              {menuItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="border-b border-black/[0.04] pb-2 last:border-none"
+                >
+                  {item.type === 'link' ? (
+                    <Link
+                      href={item.page === 'home' ? '/' : `/${item.page}`}
+                      onClick={(e) => {
+                        handleNavClick(item.page || 'home', e);
+                      }}
+                      className="block w-full text-left py-1 text-[18px] font-bold text-black transition-colors duration-200 hover:text-[#f26b2c] cursor-pointer"
+                    >
+                      {item.name}
+                    </Link>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => item.key && toggleSubMenu(item.key)}
+                        className="flex w-full items-center justify-between py-1 text-left text-[18px] font-bold text-black transition-colors duration-200 hover:text-[#f26b2c] cursor-pointer"
+                      >
+                        <span>{item.name}</span>
+                        <span className="text-sm font-light text-black/40">
+                          {activeSubMenu === item.key ? '—' : '+'}
+                        </span>
+                      </button>
+
+                      <AnimatePresence initial={false}>
+                        {activeSubMenu === item.key && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeOut' }}
+                            className="overflow-hidden"
+                          >
+                            <div className="grid grid-cols-2 gap-4 py-2 pl-3">
+                              {item.columns?.map((col, cIdx) => (
+                                <ul key={cIdx} className="space-y-1.5">
+                                  {col.map((subLink, lIdx) => (
+                                    <li key={lIdx}>
+                                      <Link
+                                        href={subLink.page === 'home' ? '/' : `/${subLink.page}`}
+                                        onClick={(e) => {
+                                          handleNavClick(subLink.page, e);
+                                        }}
+                                        className="block text-left text-[13px] font-semibold text-gray-500 transition-colors duration-200 hover:text-black cursor-pointer"
+                                      >
+                                        {subLink.name}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  )}
+                </div>
+              ))}
+            </nav>
+
+            {/* Bottom Contacts Section */}
+            <div className="mt-4 border-t border-black/[0.06] pt-4 text-[11px] text-gray-400 text-left">
+              <a
+                href="mailto:info@example.com"
+                className="block text-black font-semibold hover:underline mb-1 text-xs"
+              >
+                info@example.com
+              </a>
+              <p className="leading-normal font-medium text-black/60">
+                123 Riverbend, California
+                <br />
+                94025, USA
+              </p>
+
+              {/* Mobile/Small Screen Button: "Let's Collaborate" */}
+              <div className="mt-4 pt-4 border-t border-black/[0.04] sm:hidden">
+                <button
+                  onClick={() => {
+                    onContactClick();
+                    setIsOpen(false);
+                  }}
+                  className="w-full group relative inline-flex h-[38px] items-center justify-center overflow-hidden rounded-none bg-black px-5 text-[11px] font-bold uppercase tracking-wider text-white transition-all duration-500 cursor-pointer"
+                >
+                  {/* Dual sliding background (orange left, white right) */}
+                  <div className="absolute inset-0 w-full h-full flex translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0">
+                    <div className="w-1/2 h-full bg-[#f26b2c]" />
+                    <div className="w-1/2 h-full bg-white" />
+                  </div>
+
+                  {/* Text Sliding Wrapper */}
+                  <span className="relative z-10 block h-4 overflow-hidden">
+                    <span className="block transform transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-full text-white">
+                      Let&apos;s Collaborate
+                    </span>
+                    <span className="absolute left-0 top-0 block translate-y-full transform transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 text-black font-black">
+                      Let&apos;s Collaborate
+                    </span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}
+

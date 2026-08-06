@@ -1,0 +1,31 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        cream: "#F4F1EA",
+        accent: "#F26B2C",
+        ink: "#0A0A0A",
+      },
+      fontFamily: {
+        sans: ["Satoshi", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        display: ["Satoshi", "sans-serif"],
+        mono: ["Satoshi", "monospace"],
+      },
+      transitionTimingFunction: {
+        smooth: "cubic-bezier(0.22,1,0.36,1)",
+      },
+      maxWidth: {
+        container: "1440px",
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;
