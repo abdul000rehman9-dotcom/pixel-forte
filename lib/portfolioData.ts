@@ -26,7 +26,7 @@ export const PORTFOLIO_PROJECTS: Record<string, PortfolioProject> = {
       "/portfolio/Horizon-1.jpeg",
       "/portfolio/Horizon-2.jpeg",
       "/portfolio/Horizon-3.jpeg",
-      "/portfolio/Horizon-4.jpeg"
+      "/portfolio/Horizon.jpeg"
     ],
     tags: ["Branding", "Website Design", "Print Collateral"],
     description: {
