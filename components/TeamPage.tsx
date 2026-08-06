@@ -72,7 +72,7 @@ export default function TeamPage() {
         {/* Hero Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/team/team-page-banner.webp"
+            src="\team\team-page-banner.webp"
             alt="The Crew Banner"
             fill
             className="object-cover"
