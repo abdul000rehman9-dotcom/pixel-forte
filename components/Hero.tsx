@@ -105,18 +105,19 @@ const CARDS_DATA: CardItem[] = [
   { id: 2, title: "Digital craftsmanship", img: "/videos/card2.mp4", type: "video" },
   { id: 3, title: "Creative vision", img: "/videos/card3.mp4", type: "video" },
   { id: 4, title: "Campaign concepts", img: "/videos/card4.mp4", type: "video" },
-  { id: 5, title: "Interactive design", img: "/videos/card5.webm", type: "video" },
+  { id: 5, title: "Interactive design", img: "/videos/card5.mp4", type: "video" },
   { id: 6, title: "Experience-led design", img: "/images/card6.webp", type: "image" },
   { id: 7, title: "Brand Identity", img: "/images/card7.webp", type: "image" },
   { id: 8, title: "Motion Graphics", img: "/images/card8.webp", type: "image" },
   { id: 9, title: "Web Development", img: "/videos/card9.mp4", type: "video" },
   { id: 10, title: "Product Design", img: "/images/card10.webp", type: "image" },
-  { id: 11, title: "Art Direction", img: "/images/card11.webp", type: "image" },
-  { id: 12, title: "UI/UX Strategy", img: "/images/card12.webp", type: "image" },
+  { id: 11, title: "Art Direction", img: "/videos/card12.mp4", type: "video" },
+  { id: 12, title: "UI/UX Strategy", img: "/videos/card11.mp4", type: "video" },
   { id: 13, title: "Typography", img: "/videos/card13.mp4", type: "video" },
   { id: 14, title: "Visual Arts", img: "/images/card14.webp", type: "image" },
   { id: 15, title: "3D Modeling", img: "/videos/card15.mp4", type: "video" },
 ];
+
 
 export default function Hero() {
   const mobileCards = CARDS_DATA.slice(0, 4);
