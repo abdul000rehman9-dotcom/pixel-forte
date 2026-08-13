@@ -1,22 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
-
-// import card1 from "../public/images/card1.webp";
-// import card2 from "../public/images/card2.webp";
-// import card3 from "../public/images/card3.webp";
-// import card4 from "../public/images/card4.webp";
-
-interface Services {
+interface Service {
   n: string;
   title: string;
   desc: string;
   img: string;
 }
-const SERVICES = [
+
+const SERVICES: Service[] = [
   {
     n: "01",
     title: "Brand strategy",
@@ -48,7 +43,8 @@ function Icon({ i }: { i: number }) {
   if (i === 0)
     return (
       <svg viewBox="0 0 48 48" className="h-10 w-10" fill="none" stroke={stroke} strokeWidth="1.2">
-        <circle cx="20" cy="24" r="10" /><circle cx="30" cy="24" r="10" />
+        <circle cx="20" cy="24" r="10" />
+        <circle cx="30" cy="24" r="10" />
       </svg>
     );
   if (i === 1)
@@ -73,7 +69,18 @@ function Icon({ i }: { i: number }) {
 }
 
 export function Services() {
-  const [active, setActive] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [clickedIndex, setClickedIndex] = useState<number | null>(null);
+
+  const boxHeight = 200; 
+  const halfHeight = boxHeight / 2;
+
+  const handleCardClick = (index: number) => {
+    setClickedIndex(index);
+    setTimeout(() => {
+      setClickedIndex(null);
+    }, 1000);
+  };
 
   return (
     <section className="bg-[#f4f1ea] py-24 px-6 overflow-hidden">
@@ -83,91 +90,123 @@ export function Services() {
           Where creative thinking meets<br />strategic brand impact
         </h2>
 
-        <div className="mt-16" style={{ perspective: "2000px" }}>
+        <div className="mt-16 space-y-6">
           {SERVICES.map((s, i) => {
-            const isHovered = active === i;
-            
+            const isHovered = hoveredIndex === i;
+            const isClicked = clickedIndex === i;
+
+            // -72 degrees leaves the front face exactly ~30% visible at the bottom
+            // while the top face presents 95% of its vertical layout.
+            let rotateX = 0;
+            if (isClicked) {
+              rotateX = -432; // -72 - 360 for a continuous straight rotation sequence
+            } else if (isHovered) {
+              rotateX = -72; 
+            }
+
             return (
               <div
                 key={s.n}
-                onMouseEnter={() => setActive(i)}
-                onMouseLeave={() => setActive(null)}
-                className="relative border-b border-neutral-300/60 last:border-b-0"
-                style={{ transformStyle: "preserve-3d" }}
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                onClick={() => handleCardClick(i)}
+                className="relative w-full cursor-pointer select-none"
+                style={{ 
+                  perspective: "1500px", 
+                  height: `${boxHeight}px`,
+                  zIndex: isHovered || isClicked ? 50 : 10,
+                }}
               >
-                <AnimatePresence initial={false}>
-                  {isHovered && (
-                    <motion.div
-                      initial={{ height: 0, rotateX: -90, opacity: 0 }}
-                      animate={{ 
-                        height: 280, 
-                        rotateX: 0, 
-                        opacity: 1,
-                        transition: { duration: 0.55, ease: [0.215, 0.61, 0.355, 1] } 
-                      }}
-                      exit={{ 
-                        height: 0, 
-                        rotateX: -90, 
-                        opacity: 0,
-                        transition: { duration: 0.4, ease: [0.55, 0.055, 0.675, 0.19] }
-                      }}
-                      style={{ 
-                        transformOrigin: "top center", 
-                        transformStyle: "preserve-3d" 
-                      }}
-                      className="overflow-hidden relative w-full z-10"
-                    >
-                      <Image
-                        src={s.img}
-                        alt={s.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 1280px) 100vw, 1280px"
-                      />
-                      <motion.div 
-                        initial={{ opacity: 0.6 }}
-                        animate={{ opacity: 0 }}
-                        exit={{ opacity: 0.6 }}
-                        className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent pointer-events-none"
-                      />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
                 <motion.div
-                  animate={{
-                    backgroundColor: isHovered ? "rgba(255,255,255,1)" : "rgba(255,255,255,0)",
-                    rotateX: isHovered ? -8 : 0,
-                    y: isHovered ? -2 : 0,
-                    boxShadow: isHovered 
-                      ? "0 20px 40px -15px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02)" 
-                      : "0 0px 0px rgba(0,0,0,0)",
+                  animate={{ rotateX }}
+                  transition={{ 
+                    duration: isClicked ? 0.9 : 0.6, 
+                    ease: [0.25, 1, 0.5, 1] 
                   }}
-                  transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1] }}
                   style={{ 
-                    transformOrigin: "top center", 
                     transformStyle: "preserve-3d",
-                    zIndex: isHovered ? 20 : 1
+                    height: "100%",
+                    width: "100%"
                   }}
-                  className="grid grid-cols-12 items-center gap-6 px-8 py-10 transition-colors duration-300 relative"
+                  className="relative"
                 >
-                  <div className="col-span-12 md:col-span-5 flex items-center gap-6">
-                    <span className="text-neutral-500 text-lg font-mono">{s.n}</span>
-                    <span className="h-px w-8 bg-neutral-300" />
-                    <h3 className="font-serif text-2xl md:text-3xl text-neutral-900 tracking-tight">{s.title}</h3>
+                  {/* FRONT FACE: Text details (dims slightly when rotated to keep contrast clean) */}
+                  <motion.div
+                    animate={{ opacity: isHovered ? 0.35 : 1 }}
+                    transition={{ duration: 0.4 }}
+                    style={{
+                      transform: `rotateX(0deg) translateZ(${halfHeight}px)`,
+                      backfaceVisibility: "hidden",
+                      height: "100%",
+                      width: "100%"
+                    }}
+                    className="absolute inset-0 bg-[#ebe7df] border border-neutral-300/80 rounded-lg flex items-center px-8 py-6 shadow-sm"
+                  >
+                    <div className="grid grid-cols-12 items-center gap-6 w-full">
+                      <div className="col-span-12 md:col-span-5 flex items-center gap-6">
+                        <span className="text-neutral-500 text-lg font-mono">{s.n}</span>
+                        <span className="h-px w-8 bg-neutral-300" />
+                        <h3 className="font-serif text-2xl md:text-3xl text-neutral-900 tracking-tight">{s.title}</h3>
+                      </div>
+                      
+                      <p className="col-span-12 md:col-span-6 text-sm leading-relaxed text-neutral-600 font-normal">
+                        {s.desc}
+                      </p>
+                      
+                      <div className="col-span-12 md:col-span-1 flex justify-end text-neutral-800">
+                        <Icon i={i} />
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* TOP FACE: Image presentation */}
+                  <div
+                    style={{
+                      transform: `rotateX(90deg) translateZ(${halfHeight}px)`,
+                      backfaceVisibility: "hidden",
+                      height: "100%",
+                      width: "100%"
+                    }}
+                    className="absolute inset-0 rounded-lg overflow-hidden border border-neutral-300 shadow-md bg-neutral-800"
+                  >
+                    <Image
+                      src={s.img}
+                      alt={s.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1200px) 100vw, 1200px"
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10" />
+                    
+                    <div className="absolute bottom-6 left-8 text-white z-10">
+                      <p className="text-xs uppercase tracking-[0.2em] opacity-80">{s.n} / Service</p>
+                      <h4 className="font-serif text-2xl mt-1">{s.title}</h4>
+                    </div>
                   </div>
-                  
-                  <p className="col-span-12 md:col-span-6 text-sm leading-relaxed text-neutral-600 font-normal">
-                    {s.desc}
-                  </p>
-                  
-                  <div className="col-span-12 md:col-span-1 flex justify-end text-neutral-800">
-                    <motion.div
-                      animate={{ scale: isHovered ? 1.05 : 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Icon i={i} />
-                    </motion.div>
+
+                  {/* BOTTOM FACE: Stabilizing panel for complete rotations */}
+                  <div
+                    style={{
+                      transform: `rotateX(-90deg) translateZ(${halfHeight}px)`,
+                      backfaceVisibility: "hidden",
+                      height: "100%",
+                      width: "100%"
+                    }}
+                    className="absolute inset-0 bg-[#dfd9cd] border border-neutral-300 rounded-lg"
+                  />
+
+                  {/* BACK FACE: Stabilizing panel for complete rotations */}
+                  <div
+                    style={{
+                      transform: `rotateX(180deg) translateZ(${halfHeight}px)`,
+                      backfaceVisibility: "hidden",
+                      height: "100%",
+                      width: "100%"
+                    }}
+                    className="absolute inset-0 bg-[#ebe7df] border border-neutral-300 rounded-lg flex items-center justify-center"
+                  >
+                    <span className="font-serif text-neutral-400 italic text-lg">{s.title}</span>
                   </div>
                 </motion.div>
               </div>

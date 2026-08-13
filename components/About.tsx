@@ -7,6 +7,7 @@ import {
   useTransform,
   useSpring,
   animate,
+  AnimationPlaybackControls,
 } from "framer-motion";
 import { useRef, useEffect } from "react";
 
@@ -19,12 +20,16 @@ const AVATARS = [
 const PILLS = ["Strategy", "Storytelling", "Digital thinking"];
 
 const PROJECT_IMAGES = [
-  "/images/img_12.webp",
+  "/images/img_11.webp",
   "/images/img_6.webp",
-  "/images/img_7.webp",
+  "/images/img_12.webp",
 ];
 
-function Counter({ value }: { value: number }) {
+interface CounterProps {
+  value: number;
+}
+
+function Counter({ value }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -37,7 +42,7 @@ function Counter({ value }: { value: number }) {
     if (!node) return;
 
     let animated = false;
-    let controls: any;
+    let controls: AnimationPlaybackControls | null = null;
 
     const unsubscribe = scrollYProgress.on("change", (latest) => {
       if (latest > 0.35 && !animated) {
@@ -51,14 +56,18 @@ function Counter({ value }: { value: number }) {
         });
       } else if (latest < 0.1 && animated) {
         animated = false;
-        if (controls) controls.stop();
+        if (controls) {
+          controls.stop();
+        }
         node.textContent = "0";
       }
     });
 
     return () => {
       unsubscribe();
-      if (controls) controls.stop();
+      if (controls) {
+        controls.stop();
+      }
     };
   }, [scrollYProgress, value]);
 
@@ -71,45 +80,40 @@ function Counter({ value }: { value: number }) {
 
 export default function About() {
   const containerRef = useRef<HTMLElement>(null);
+  const bottomRowRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
-  // Smooth dampening setup
-  const springConfig = { damping: 24, stiffness: 80 };
+  // Scroll tracking for the lower section
+  const { scrollYProgress: bottomScrollY } = useScroll({
+    target: bottomRowRef,
+    offset: ["start end", "end center"],
+  });
+
+  const springConfig = { damping: 25, stiffness: 90 };
   const smoothProgress = useSpring(scrollYProgress, springConfig);
-  
+  const smoothBottomProgress = useSpring(bottomScrollY, springConfig);
+
   const rotateValue = useTransform(smoothProgress, [0, 1], [0, 240]);
 
   const textOpacity1 = useTransform(scrollYProgress, [0.15, 0.28], ["#d4d4d8", "#171717"]);
   const textOpacity2 = useTransform(scrollYProgress, [0.28, 0.42], ["#d4d4d8", "#171717"]);
   const textOpacity3 = useTransform(scrollYProgress, [0.42, 0.55], ["#d4d4d8", "#171717"]);
 
-  // =========================================================================
-  // ABSOLUTE FIX: Synchronized entry, hold, and exit matching video 1
-  // =========================================================================
+  // --- Image Placement & Animation Config ---
+  // The cards start stacked directly on top of each other (X = 0, Y = 200).
+  // On scroll, they slide up and separate into a straight horizontal line.
+  // Assuming a card width of 150px and a 12px gap, Card 1 translates left by 162px, and Card 3 translates right by 162px.
+  const card1X = useTransform(smoothBottomProgress, [0.1, 0.75], [0, -162]);
+  const card1Y = useTransform(smoothBottomProgress, [0.1, 0.75], [200, 0]);
 
-  // Card 1 (Left Card)
-  // Enters flat/stacked from bottom, fans out cleanly in center, then contracts back
-  const card1X = useTransform(smoothProgress, [0.1, 0.45, 0.8], [-15, -125, -15]);
-  const card1Y = useTransform(smoothProgress, [0.1, 0.45, 0.8], [140, 0, 140]);
-  const card1RotateZ = useTransform(smoothProgress, [0.1, 0.45, 0.8], [-3, -12, -3]);
-  const card1RotateY = useTransform(smoothProgress, [0.1, 0.45, 0.8], [12, 26, 12]); 
-  const card1RotateX = useTransform(smoothProgress, [0.1, 0.45, 0.8], [15, 0, 15]);
+  const card2Y = useTransform(smoothBottomProgress, [0.1, 0.75], [200, 0]);
 
-  // Card 2 (Center Card)
-  const card2Y = useTransform(smoothProgress, [0.1, 0.45, 0.8], [140, -6, 140]);
-  const card2Scale = useTransform(smoothProgress, [0.1, 0.45, 0.8], [0.96, 1.05, 0.96]);
-  const card2RotateX = useTransform(smoothProgress, [0.1, 0.45, 0.8], [15, 0, 15]);
-
-  // Card 3 (Right Card)
-  const card3X = useTransform(smoothProgress, [0.1, 0.45, 0.8], [15, 125, 15]);
-  const card3Y = useTransform(smoothProgress, [0.1, 0.45, 0.8], [140, 0, 140]);
-  const card3RotateZ = useTransform(smoothProgress, [0.1, 0.45, 0.8], [3, 12, 3]);
-  const card3RotateY = useTransform(smoothProgress, [0.1, 0.45, 0.8], [-12, -26, -12]); 
-  const card3RotateX = useTransform(smoothProgress, [0.1, 0.45, 0.8], [15, 0, 15]);
+  const card3X = useTransform(smoothBottomProgress, [0.1, 0.75], [0, 162]);
+  const card3Y = useTransform(smoothBottomProgress, [0.1, 0.75], [200, 0]);
 
   return (
     <section
@@ -117,29 +121,31 @@ export default function About() {
       id="about"
       className="relative overflow-hidden bg-[#faf8f3] px-6 pt-20 pb-16 sm:px-12 lg:px-20 lg:pt-28 lg:pb-24 z-10"
     >
-      {/* 3D Rotating Right Side Graphic - Hidden on Mobile to prevent overlap */}
+      {/* 3D Rotating Right Side Graphic */}
       <motion.div
         style={{ rotate: rotateValue }}
         className="hidden lg:block absolute right-[-4%] top-[4%] z-0 pointer-events-none lg:w-[480px] lg:h-[480px] xl:w-[550px] xl:h-[550px]"
+        aria-hidden="true"
       >
         <Image
           src="/icons/idotive-icon-8.png"
-          alt="Rotating Star Graphic"
+          alt=""
           fill
           className="object-contain"
         />
       </motion.div>
 
       <div className="relative z-10 mx-auto max-w-[1550px]">
-        {/* Mobile/Tablet Rotating Star Graphic - positioned above the heading as a separate block-level element */}
+        {/* Mobile/Tablet Rotating Star Graphic */}
         <div className="block lg:hidden mb-6 text-left">
           <motion.div
             style={{ rotate: rotateValue }}
             className="w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] relative pointer-events-none"
+            aria-hidden="true"
           >
             <Image
               src="/icons/idotive-icon-8.png"
-              alt="Rotating Star Graphic"
+              alt=""
               fill
               className="object-contain"
             />
@@ -178,7 +184,7 @@ export default function About() {
                 >
                   <Image
                     src={avatar.src}
-                    alt="Team preview"
+                    alt="Team member preview"
                     width={56}
                     height={56}
                     className="h-full w-full object-cover"
@@ -186,7 +192,11 @@ export default function About() {
                   />
                 </div>
               ))}
-              <button className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-[#ff6b35] text-white text-lg sm:text-xl font-light hover:scale-105 transition-transform shadow-sm">
+              <button 
+                type="button"
+                aria-label="View all team members"
+                className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-[#ff6b35] text-white text-lg sm:text-xl font-light hover:scale-105 transition-transform shadow-sm"
+              >
                 +
               </button>
             </div>
@@ -214,113 +224,121 @@ export default function About() {
           </div>
         </div>
 
-        <div className="mt-20 grid gap-10 md:grid-cols-2 lg:grid-cols-[1fr_auto_auto] items-end pt-8 border-t border-neutral-200/70">
-          <div className="flex flex-wrap gap-1.5 max-w-[300px]">
+        {/* Lower Row Section */}
+        <div 
+          ref={bottomRowRef}
+          className="mt-8 sm:mt-10 pt-6 border-t border-neutral-200/70 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-4 items-center"
+        >
+          {/* 1. Vertically Stacked Pills Column */}
+          <div className="lg:col-span-3 flex flex-col items-start gap-1.5">
             {PILLS.map((pill) => (
               <span
                 key={pill}
-                className="rounded-full border border-neutral-300 px-4 py-2 text-xs font-medium text-neutral-700 bg-white/40"
+                className="rounded-full border border-neutral-300 px-4 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-800 bg-white/60 backdrop-blur-sm"
               >
                 {pill}
               </span>
             ))}
           </div>
 
-          <div className="flex items-center gap-8 sm:gap-12 lg:px-4">
+          {/* 2. Stats Column */}
+          <div className="lg:col-span-4 flex items-center gap-6 sm:gap-8 justify-start">
             <div>
-              <div className="font-display text-[2.8rem] sm:text-[3.5rem] font-bold leading-none tracking-tighter text-neutral-900 flex items-center">
+              <div className="font-display text-[2.5rem] sm:text-[3.2rem] font-bold leading-none tracking-tighter text-neutral-900 flex items-center">
                 <Counter value={98} />%
               </div>
-              <div className="mt-2 text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-400">
+              <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-400">
                 Client happiness rate
               </div>
             </div>
 
-            <div className="h-10 w-px bg-neutral-200" />
+            <div className="h-10 w-px bg-neutral-200" aria-hidden="true" />
 
             <div>
-              <div className="font-display text-[2.8rem] sm:text-[3.5rem] font-bold leading-none tracking-tighter text-neutral-900 flex items-center">
+              <div className="font-display text-[2.5rem] sm:text-[3.2rem] font-bold leading-none tracking-tighter text-neutral-900 flex items-center">
                 <Counter value={300} />+
               </div>
-              <div className="mt-2 text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-400">
+              <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-400">
                 Brands transformed
               </div>
             </div>
           </div>
 
-          {/* 3D Viewport wrapper */}
-          <div 
-            className="flex items-center justify-start lg:justify-end w-full lg:w-auto min-w-0 sm:min-w-[380px] h-36 relative overflow-visible px-4"
-            style={{ perspective: "1400px", transformStyle: "preserve-3d" }}
-          >
-            <div className="absolute bottom-0 right-4 flex items-end justify-center h-32 overflow-visible" style={{ transformStyle: "preserve-3d" }}>
-              <div className="relative flex items-end justify-center w-[140px] h-[95px] overflow-visible" style={{ transformStyle: "preserve-3d" }}>
-                
-                {/* Card 1 - Left */}
-                <motion.div 
-                  style={{ 
-                    x: card1X, 
-                    y: card1Y, 
-                    rotate: card1RotateZ,
-                    rotateY: card1RotateY,
-                    rotateX: card1RotateX,
-                    originY: 1, 
-                    originX: 0.5 
-                  }}
-                  className="absolute w-[130px] h-[90px] z-10 flex-shrink-0"
+          {/* 3. Stacked Images Container */}
+          {/* Center alignment on desktop with space for horizontal expansion */}
+          <div className="lg:col-span-5 flex items-center justify-start lg:justify-center w-full lg:pr-12 xl:pr-24 overflow-visible">
+            {/* 
+              This relative frame acts as the base container. 
+              The width is set to a single card's width.
+              Each card inside is placed absolutely so they layer exactly one over another.
+            */}
+            <div className="relative w-[130px] sm:w-[150px] aspect-[1.35/1] flex-shrink-0">
+              
+              {/* Card 3 (Bottom Layer, slides to the right) */}
+              <motion.div 
+                style={{ 
+                  x: card3X, 
+                  y: card3Y,
+                }}
+                className="absolute inset-0 w-full h-full z-10"
+              >
+                <motion.div
+                  whileHover={{ y: -6, scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="w-full h-full overflow-hidden rounded-none shadow-sm cursor-pointer relative bg-neutral-200"
                 >
-                  <motion.div
-                    whileHover={{ y: -25, rotate: 0, rotateY: 0, rotateX: 0, scale: 1.15, zIndex: 50 }}
-                    transition={{ type: "spring", stiffness: 250, damping: 18 }}
-                    className="w-full h-full overflow-hidden rounded-none shadow-xl cursor-pointer transform-gpu"
-                  >
-                    <Image src={PROJECT_IMAGES[0]} alt="Project Preview 1" fill className="object-cover" />
-                  </motion.div>
+                  <Image 
+                    src={PROJECT_IMAGES[2]} 
+                    alt="Project Preview 3" 
+                    fill 
+                    className="object-cover" 
+                  />
                 </motion.div>
+              </motion.div>
 
-                {/* Card 2 - Center */}
-                <motion.div 
-                  style={{ 
-                    y: card2Y, 
-                    scale: card2Scale,
-                    rotateX: card2RotateX,
-                    originY: 1, 
-                    originX: 0.5 
-                  }}
-                  className="absolute w-[130px] h-[90px] z-20 flex-shrink-0"
+              {/* Card 2 (Middle Layer, rises straight up) */}
+              <motion.div 
+                style={{ 
+                  y: card2Y, 
+                }}
+                className="absolute inset-0 w-full h-full z-20"
+              >
+                <motion.div
+                  whileHover={{ y: -6, scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="w-full h-full overflow-hidden rounded-none shadow-sm cursor-pointer relative bg-neutral-200"
                 >
-                  <motion.div
-                    whileHover={{ y: -25, scale: 1.15, zIndex: 50 }}
-                    transition={{ type: "spring", stiffness: 250, damping: 18 }}
-                    className="w-full h-full overflow-hidden rounded-none shadow-2xl cursor-pointer transform-gpu"
-                  >
-                    <Image src={PROJECT_IMAGES[1]} alt="Project Preview 2" fill className="object-cover" />
-                  </motion.div>
+                  <Image 
+                    src={PROJECT_IMAGES[1]} 
+                    alt="Project Preview 2" 
+                    fill 
+                    className="object-cover" 
+                  />
                 </motion.div>
+              </motion.div>
 
-                {/* Card 3 - Right */}
-                <motion.div 
-                  style={{ 
-                    x: card3X, 
-                    y: card3Y, 
-                    rotate: card3RotateZ,
-                    rotateY: card3RotateY,
-                    rotateX: card3RotateX,
-                    originY: 1, 
-                    originX: 0.5 
-                  }}
-                  className="absolute w-[130px] h-[90px] z-10 flex-shrink-0"
+              {/* Card 1 (Top Layer, slides to the left) */}
+              <motion.div 
+                style={{ 
+                  x: card1X, 
+                  y: card1Y,
+                }}
+                className="absolute inset-0 w-full h-full z-30"
+              >
+                <motion.div
+                  whileHover={{ y: -6, scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="w-full h-full overflow-hidden rounded-none shadow-sm cursor-pointer relative bg-neutral-200"
                 >
-                  <motion.div
-                    whileHover={{ y: -25, rotate: 0, rotateY: 0, rotateX: 0, scale: 1.15, zIndex: 50 }}
-                    transition={{ type: "spring", stiffness: 250, damping: 18 }}
-                    className="w-full h-full overflow-hidden rounded-none shadow-lg cursor-pointer transform-gpu"
-                  >
-                    <Image src={PROJECT_IMAGES[2]} alt="Project Preview 3" fill className="object-cover" />
-                  </motion.div>
+                  <Image 
+                    src={PROJECT_IMAGES[0]} 
+                    alt="Project Preview 1" 
+                    fill 
+                    className="object-cover" 
+                  />
                 </motion.div>
+              </motion.div>
 
-              </div>
             </div>
           </div>
         </div>
