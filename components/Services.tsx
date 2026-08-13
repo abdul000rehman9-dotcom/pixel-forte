@@ -42,27 +42,27 @@ function Icon({ i }: { i: number }) {
   const stroke = "currentColor";
   if (i === 0)
     return (
-      <svg viewBox="0 0 48 48" className="h-10 w-10" fill="none" stroke={stroke} strokeWidth="1.2">
+      <svg viewBox="0 0 48 48" className="h-9 w-9" fill="none" stroke={stroke} strokeWidth="1.2">
         <circle cx="20" cy="24" r="10" />
         <circle cx="30" cy="24" r="10" />
       </svg>
     );
   if (i === 1)
     return (
-      <svg viewBox="0 0 48 48" className="h-10 w-10" fill="none" stroke={stroke} strokeWidth="1.2">
+      <svg viewBox="0 0 48 48" className="h-9 w-9" fill="none" stroke={stroke} strokeWidth="1.2">
         <rect x="10" y="14" width="20" height="20" transform="rotate(15 20 24)" />
         <rect x="18" y="14" width="20" height="20" transform="rotate(-15 28 24)" />
       </svg>
     );
   if (i === 2)
     return (
-      <svg viewBox="0 0 48 48" className="h-10 w-10" fill="none" stroke={stroke} strokeWidth="1.2">
+      <svg viewBox="0 0 48 48" className="h-9 w-9" fill="none" stroke={stroke} strokeWidth="1.2">
         <rect x="10" y="10" width="20" height="20" />
         <circle cx="32" cy="32" r="8" />
       </svg>
     );
   return (
-    <svg viewBox="0 0 48 48" className="h-10 w-10" fill="none" stroke={stroke} strokeWidth="1.2">
+    <svg viewBox="0 0 48 48" className="h-9 w-9" fill="none" stroke={stroke} strokeWidth="1.2">
       <polygon points="24,8 40,18 40,30 24,40 8,30 8,18" />
     </svg>
   );
@@ -90,18 +90,18 @@ export function Services() {
           Where creative thinking meets<br />strategic brand impact
         </h2>
 
-        <div className="mt-16 space-y-6">
+        {/* space-y-14 provides physical clearance for the 3D rotation */}
+        <div className="mt-20 space-y-14">
           {SERVICES.map((s, i) => {
             const isHovered = hoveredIndex === i;
             const isClicked = clickedIndex === i;
 
-            // -72 degrees leaves the front face exactly ~30% visible at the bottom
-            // while the top face presents 95% of its vertical layout.
+            // -45 degrees yields a balanced 50/50 visual split
             let rotateX = 0;
             if (isClicked) {
-              rotateX = -432; // -72 - 360 for a continuous straight rotation sequence
+              rotateX = -405; // -45 - 360 for a smooth continuous spin
             } else if (isHovered) {
-              rotateX = -72; 
+              rotateX = -45; 
             }
 
             return (
@@ -110,17 +110,20 @@ export function Services() {
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 onClick={() => handleCardClick(i)}
-                className="relative w-full cursor-pointer select-none"
+                className="relative w-full cursor-pointer select-none animate-none"
                 style={{ 
-                  perspective: "1500px", 
+                  perspective: "1800px", 
                   height: `${boxHeight}px`,
                   zIndex: isHovered || isClicked ? 50 : 10,
                 }}
               >
                 <motion.div
-                  animate={{ rotateX }}
+                  animate={{ 
+                    rotateX,
+                    scale: isHovered || isClicked ? 0.95 : 1 // Recedes slightly to stay elegantly spaced
+                  }}
                   transition={{ 
-                    duration: isClicked ? 0.9 : 0.6, 
+                    duration: isClicked ? 0.95 : 0.55, 
                     ease: [0.25, 1, 0.5, 1] 
                   }}
                   style={{ 
@@ -130,21 +133,21 @@ export function Services() {
                   }}
                   className="relative"
                 >
-                  {/* FRONT FACE: Text details (dims slightly when rotated to keep contrast clean) */}
+                  {/* FRONT FACE: Clean warm-toned off-white background */}
                   <motion.div
-                    animate={{ opacity: isHovered ? 0.35 : 1 }}
-                    transition={{ duration: 0.4 }}
+                    animate={{ opacity: isHovered ? 0.85 : 1 }}
+                    transition={{ duration: 0.3 }}
                     style={{
                       transform: `rotateX(0deg) translateZ(${halfHeight}px)`,
                       backfaceVisibility: "hidden",
                       height: "100%",
                       width: "100%"
                     }}
-                    className="absolute inset-0 bg-[#ebe7df] border border-neutral-300/80 rounded-lg flex items-center px-8 py-6 shadow-sm"
+                    className="absolute inset-0 bg-[#faf9f6] border border-[#e1dacb] rounded-lg flex items-center px-8 md:px-10 py-6 shadow-sm"
                   >
                     <div className="grid grid-cols-12 items-center gap-6 w-full">
                       <div className="col-span-12 md:col-span-5 flex items-center gap-6">
-                        <span className="text-neutral-500 text-lg font-mono">{s.n}</span>
+                        <span className="text-neutral-400 text-base font-mono">{s.n}</span>
                         <span className="h-px w-8 bg-neutral-300" />
                         <h3 className="font-serif text-2xl md:text-3xl text-neutral-900 tracking-tight">{s.title}</h3>
                       </div>
@@ -153,7 +156,7 @@ export function Services() {
                         {s.desc}
                       </p>
                       
-                      <div className="col-span-12 md:col-span-1 flex justify-end text-neutral-800">
+                      <div className="col-span-12 md:col-span-1 flex justify-end text-neutral-700">
                         <Icon i={i} />
                       </div>
                     </div>
@@ -167,7 +170,7 @@ export function Services() {
                       height: "100%",
                       width: "100%"
                     }}
-                    className="absolute inset-0 rounded-lg overflow-hidden border border-neutral-300 shadow-md bg-neutral-800"
+                    className="absolute inset-0 rounded-lg overflow-hidden border border-[#e1dacb] shadow-md bg-neutral-900"
                   >
                     <Image
                       src={s.img}
@@ -177,15 +180,15 @@ export function Services() {
                       sizes="(max-width: 1200px) 100vw, 1200px"
                       priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/15" />
                     
-                    <div className="absolute bottom-6 left-8 text-white z-10">
-                      <p className="text-xs uppercase tracking-[0.2em] opacity-80">{s.n} / Service</p>
-                      <h4 className="font-serif text-2xl mt-1">{s.title}</h4>
+                    <div className="absolute bottom-8 left-10 text-white z-10">
+                      <p className="text-xs uppercase tracking-[0.2em] opacity-85">{s.n} / Service</p>
+                      <h4 className="font-serif text-2xl md:text-3xl mt-1 tracking-tight">{s.title}</h4>
                     </div>
                   </div>
 
-                  {/* BOTTOM FACE: Stabilizing panel for complete rotations */}
+                  {/* BOTTOM FACE: Color-matched stabilizing structural panel */}
                   <div
                     style={{
                       transform: `rotateX(-90deg) translateZ(${halfHeight}px)`,
@@ -193,10 +196,10 @@ export function Services() {
                       height: "100%",
                       width: "100%"
                     }}
-                    className="absolute inset-0 bg-[#dfd9cd] border border-neutral-300 rounded-lg"
+                    className="absolute inset-0 bg-[#e6e2d8] border border-[#d8d1bf] rounded-lg"
                   />
 
-                  {/* BACK FACE: Stabilizing panel for complete rotations */}
+                  {/* BACK FACE: Color-matched stabilizing structural panel */}
                   <div
                     style={{
                       transform: `rotateX(180deg) translateZ(${halfHeight}px)`,
@@ -204,7 +207,7 @@ export function Services() {
                       height: "100%",
                       width: "100%"
                     }}
-                    className="absolute inset-0 bg-[#ebe7df] border border-neutral-300 rounded-lg flex items-center justify-center"
+                    className="absolute inset-0 bg-[#faf9f6] border border-[#e1dacb] rounded-lg flex items-center justify-center"
                   >
                     <span className="font-serif text-neutral-400 italic text-lg">{s.title}</span>
                   </div>
