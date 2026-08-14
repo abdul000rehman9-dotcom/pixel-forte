@@ -123,23 +123,22 @@ function Card({
       }}
       className="absolute inset-0 flex items-center justify-center will-change-transform"
     >
-      <div className="w-[90vw] md:w-[min(67vw,1280px)] max-w-full rounded-2xl bg-white p-4 sm:p-6 shadow-2xl border border-white/5">
-        <div className="aspect-[1.93/1] overflow-hidden rounded-xl relative w-full">
+      <div className="w-[92vw] sm:w-[88vw] md:w-[min(67vw,1280px)] max-w-full rounded-2xl bg-white p-4 sm:p-6 shadow-2xl border border-white/5">
+        <div className="aspect-[1.93/1] overflow-hidden rounded-xl relative w-full bg-neutral-900">
           <Image
             src={data.image}
             alt={data.title}
             fill
-            sizes="(max-width: 1280px) 90vw, 1280px"
+            sizes="(max-width: 1280px) 92vw, 1280px"
             className="object-cover"
             draggable={false}
           />
         </div>
-        <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-          {/* Changed 'text-Black' to 'text-black' so styling works */}
-          <h3 className="text-4xl font-semibold text-black">
+        <div className="mt-4 sm:mt-6 grid grid-cols-1 gap-3 sm:gap-6 md:grid-cols-2 items-start">
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-black tracking-tight leading-tight">
             {data.title}
           </h3>
-          <p className="text-sm leading-relaxed text-neutral-700">
+          <p className="text-xs sm:text-sm leading-relaxed text-neutral-700">
             {data.description}
           </p>
         </div>

@@ -9,7 +9,7 @@ import {
   animate,
   AnimationPlaybackControls,
 } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 const AVATARS = [
   { src: "/images/idotive-home-athour-1.webp" },
@@ -81,6 +81,14 @@ function Counter({ value }: CounterProps) {
 export default function About() {
   const containerRef = useRef<HTMLElement>(null);
   const bottomRowRef = useRef<HTMLDivElement>(null);
+  const [screenWidth, setScreenWidth] = useState(1200);
+
+  useEffect(() => {
+    const updateWidth = () => setScreenWidth(window.innerWidth);
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -103,17 +111,22 @@ export default function About() {
   const textOpacity2 = useTransform(scrollYProgress, [0.28, 0.42], ["#d4d4d8", "#171717"]);
   const textOpacity3 = useTransform(scrollYProgress, [0.42, 0.55], ["#d4d4d8", "#171717"]);
 
-  // --- Image Placement & Animation Config ---
-  // The cards start stacked directly on top of each other (X = 0, Y = 200).
-  // On scroll, they slide up and separate into a straight horizontal line.
-  // Assuming a card width of 150px and a 12px gap, Card 1 translates left by 162px, and Card 3 translates right by 162px.
-  const card1X = useTransform(smoothBottomProgress, [0.1, 0.75], [0, -162]);
-  const card1Y = useTransform(smoothBottomProgress, [0.1, 0.75], [200, 0]);
+  // --- Dynamic Responsive Image Placement & Animation Config ---
+  // Calculates card translation offsets dynamically to ensure zero overlap and zero overflow on all viewports
+  const cardSpread = useTransform(smoothBottomProgress, [0.1, 0.75], [0, 1]);
+  const cardOffset = 
+    screenWidth < 400 ? 55 : 
+    screenWidth < 640 ? 70 : 
+    screenWidth < 1024 ? 95 : 125;
+  const initialY = screenWidth < 640 ? 60 : 120;
 
-  const card2Y = useTransform(smoothBottomProgress, [0.1, 0.75], [200, 0]);
+  const card1X = useTransform(cardSpread, (v) => v * -cardOffset);
+  const card1Y = useTransform(smoothBottomProgress, [0.1, 0.75], [initialY, 0]);
 
-  const card3X = useTransform(smoothBottomProgress, [0.1, 0.75], [0, 162]);
-  const card3Y = useTransform(smoothBottomProgress, [0.1, 0.75], [200, 0]);
+  const card2Y = useTransform(smoothBottomProgress, [0.1, 0.75], [initialY, 0]);
+
+  const card3X = useTransform(cardSpread, (v) => v * cardOffset);
+  const card3Y = useTransform(smoothBottomProgress, [0.1, 0.75], [initialY, 0]);
 
   return (
     <section
@@ -157,7 +170,7 @@ export default function About() {
         </div>
 
         <div className="max-w-full lg:max-w-[60%] xl:max-w-[55%]">
-          <h2 className="font-display text-[1.5rem] sm:text-[2rem] lg:text-[2.6rem] font-bold leading-[1.2] tracking-[-0.02em]">
+          <h2 className="font-display text-[1.4rem] sm:text-[2rem] lg:text-[2.6rem] font-bold leading-[1.2] tracking-[-0.02em]">
             <motion.span style={{ color: textOpacity1 }}>
               We help brands express their vision through{" "}
             </motion.span>
@@ -224,30 +237,18 @@ export default function About() {
           </div>
         </div>
 
-        {/* Lower Row Section */}
+        {/* Lower Row Section: Structured for perfect responsive hierarchy */}
         <div 
           ref={bottomRowRef}
-          className="mt-8 sm:mt-10 pt-6 border-t border-neutral-200/70 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-4 items-center"
+          className="mt-8 sm:mt-10 pt-6 border-t border-neutral-200/70 flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-4 items-center"
         >
-          {/* 1. Vertically Stacked Pills Column */}
-          <div className="lg:col-span-3 flex flex-col items-start gap-1.5">
-            {PILLS.map((pill) => (
-              <span
-                key={pill}
-                className="rounded-full border border-neutral-300 px-4 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-800 bg-white/60 backdrop-blur-sm"
-              >
-                {pill}
-              </span>
-            ))}
-          </div>
-
-          {/* 2. Stats Column */}
-          <div className="lg:col-span-4 flex items-center gap-6 sm:gap-8 justify-start">
+          {/* 1. Stats Numbering Column - Stays on TOP on mobile, in middle/left on desktop */}
+          <div className="order-1 md:order-2 md:col-span-4 lg:col-span-4 flex items-center gap-6 sm:gap-8 justify-start w-full pb-4 md:pb-0 border-b md:border-b-0 border-neutral-200/60">
             <div>
-              <div className="font-display text-[2.5rem] sm:text-[3.2rem] font-bold leading-none tracking-tighter text-neutral-900 flex items-center">
+              <div className="font-display text-[2.2rem] sm:text-[3rem] lg:text-[3.2rem] font-bold leading-none tracking-tighter text-neutral-900 flex items-center">
                 <Counter value={98} />%
               </div>
-              <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-400">
+              <div className="mt-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-400">
                 Client happiness rate
               </div>
             </div>
@@ -255,92 +256,102 @@ export default function About() {
             <div className="h-10 w-px bg-neutral-200" aria-hidden="true" />
 
             <div>
-              <div className="font-display text-[2.5rem] sm:text-[3.2rem] font-bold leading-none tracking-tighter text-neutral-900 flex items-center">
+              <div className="font-display text-[2.2rem] sm:text-[3rem] lg:text-[3.2rem] font-bold leading-none tracking-tighter text-neutral-900 flex items-center">
                 <Counter value={300} />+
               </div>
-              <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-400">
+              <div className="mt-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-400">
                 Brands transformed
               </div>
             </div>
           </div>
 
-          {/* 3. Stacked Images Container */}
-          {/* Center alignment on desktop with space for horizontal expansion */}
-          <div className="lg:col-span-5 flex items-center justify-start lg:justify-center w-full lg:pr-12 xl:pr-24 overflow-visible">
-            {/* 
-              This relative frame acts as the base container. 
-              The width is set to a single card's width.
-              Each card inside is placed absolutely so they layer exactly one over another.
-            */}
-            <div className="relative w-[130px] sm:w-[150px] aspect-[1.35/1] flex-shrink-0">
-              
-              {/* Card 3 (Bottom Layer, slides to the right) */}
-              <motion.div 
-                style={{ 
-                  x: card3X, 
-                  y: card3Y,
-                }}
-                className="absolute inset-0 w-full h-full z-10"
-              >
-                <motion.div
-                  whileHover={{ y: -6, scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="w-full h-full overflow-hidden rounded-none shadow-sm cursor-pointer relative bg-neutral-200"
+          {/* 2. Mobile Bottom Section / Desktop Columns: Pills on left, Images on right */}
+          <div className="order-2 w-full flex items-center justify-between gap-4 md:contents">
+            {/* Pill Buttons Div (Left side) */}
+            <div className="md:order-1 md:col-span-4 lg:col-span-3 flex flex-col items-start gap-1.5">
+              {PILLS.map((pill) => (
+                <span
+                  key={pill}
+                  className="rounded-full border border-neutral-300 px-3 sm:px-4 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-neutral-800 bg-white/60 backdrop-blur-sm"
                 >
-                  <Image 
-                    src={PROJECT_IMAGES[2]} 
-                    alt="Project Preview 3" 
-                    fill 
-                    className="object-cover" 
-                  />
-                </motion.div>
-              </motion.div>
+                  {pill}
+                </span>
+              ))}
+            </div>
 
-              {/* Card 2 (Middle Layer, rises straight up) */}
-              <motion.div 
-                style={{ 
-                  y: card2Y, 
-                }}
-                className="absolute inset-0 w-full h-full z-20"
-              >
-                <motion.div
-                  whileHover={{ y: -6, scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="w-full h-full overflow-hidden rounded-none shadow-sm cursor-pointer relative bg-neutral-200"
+            {/* Stacked Images Container (Right side, sized to match tab bar & decreasing dynamically) */}
+            <div className="md:order-3 md:col-span-4 lg:col-span-5 flex items-center justify-end lg:justify-center pr-6 xs:pr-8 sm:pr-10 md:pr-0 overflow-visible">
+              <div className="relative w-[65px] xs:w-[75px] sm:w-[90px] md:w-[105px] lg:w-[125px] aspect-[1.35/1] flex-shrink-0">
+                
+                {/* Card 3 (Bottom Layer, slides to the right) */}
+                <motion.div 
+                  style={{ 
+                    x: card3X, 
+                    y: card3Y,
+                  }}
+                  className="absolute inset-0 w-full h-full z-10"
                 >
-                  <Image 
-                    src={PROJECT_IMAGES[1]} 
-                    alt="Project Preview 2" 
-                    fill 
-                    className="object-cover" 
-                  />
+                  <motion.div
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className="w-full h-full overflow-hidden rounded-none shadow-md cursor-pointer relative bg-neutral-200 border border-black/5"
+                  >
+                    <Image 
+                      src={PROJECT_IMAGES[2]} 
+                      alt="Project Preview 3" 
+                      fill 
+                      className="object-cover" 
+                    />
+                  </motion.div>
                 </motion.div>
-              </motion.div>
 
-              {/* Card 1 (Top Layer, slides to the left) */}
-              <motion.div 
-                style={{ 
-                  x: card1X, 
-                  y: card1Y,
-                }}
-                className="absolute inset-0 w-full h-full z-30"
-              >
-                <motion.div
-                  whileHover={{ y: -6, scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="w-full h-full overflow-hidden rounded-none shadow-sm cursor-pointer relative bg-neutral-200"
+                {/* Card 2 (Middle Layer, rises straight up) */}
+                <motion.div 
+                  style={{ 
+                    y: card2Y, 
+                  }}
+                  className="absolute inset-0 w-full h-full z-20"
                 >
-                  <Image 
-                    src={PROJECT_IMAGES[0]} 
-                    alt="Project Preview 1" 
-                    fill 
-                    className="object-cover" 
-                  />
+                  <motion.div
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className="w-full h-full overflow-hidden rounded-none shadow-md cursor-pointer relative bg-neutral-200 border border-black/5"
+                  >
+                    <Image 
+                      src={PROJECT_IMAGES[1]} 
+                      alt="Project Preview 2" 
+                      fill 
+                      className="object-cover" 
+                    />
+                  </motion.div>
                 </motion.div>
-              </motion.div>
 
+                {/* Card 1 (Top Layer, slides to the left) */}
+                <motion.div 
+                  style={{ 
+                    x: card1X, 
+                    y: card1Y,
+                  }}
+                  className="absolute inset-0 w-full h-full z-30"
+                >
+                  <motion.div
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className="w-full h-full overflow-hidden rounded-none shadow-md cursor-pointer relative bg-neutral-200 border border-black/5"
+                  >
+                    <Image 
+                      src={PROJECT_IMAGES[0]} 
+                      alt="Project Preview 1" 
+                      fill 
+                      className="object-cover" 
+                    />
+                  </motion.div>
+                </motion.div>
+
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>

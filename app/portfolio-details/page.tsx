@@ -43,11 +43,11 @@ function PortfolioDetailsContent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-black uppercase tracking-tight leading-none max-w-5xl mx-auto"
+          className="text-2.5xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-black uppercase tracking-tight leading-tight sm:leading-none max-w-5xl mx-auto"
         >
           {project.title}
         </motion.h1>
-        <p className="text-sm font-mono tracking-widest text-neutral-500 font-bold uppercase">
+        <p className="text-xs sm:text-sm font-mono tracking-widest text-neutral-500 font-bold uppercase">
           {project.subtitle}
         </p>
       </div>
@@ -67,7 +67,7 @@ function PortfolioDetailsContent() {
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          className="relative w-full aspect-[2/1] overflow-hidden rounded-2xl border border-black/10 shadow-2xl bg-neutral-900 group cursor-pointer"
+          className="relative w-full aspect-[16/10] sm:aspect-[2/1] overflow-hidden rounded-2xl border border-black/10 shadow-2xl bg-neutral-900 group cursor-pointer"
           onClick={() => setSelectedImage({ src: project.bannerImage, title: `${project.title} – Main Banner` })}
         >
           <Image

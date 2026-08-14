@@ -199,7 +199,7 @@ export default function ServicesTwoPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-6xl sm:text-7xl lg:text-8xl font-black text-white tracking-tight uppercase"
+              className="text-4xl sm:text-7xl lg:text-8xl font-black text-white tracking-tight uppercase"
             >
               Our service
             </motion.h1>

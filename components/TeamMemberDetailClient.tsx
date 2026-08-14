@@ -437,7 +437,7 @@ export default function TeamMemberDetailClient({ id }: { id: string }) {
                     <span className="inline-block bg-[#f26b2c] text-white text-[10px] font-mono font-bold tracking-[0.2em] px-4 py-1.5 uppercase rounded-none">
                       {member.role}
                     </span>
-                    <h1 className="text-4xl sm:text-6xl font-black text-black leading-none tracking-tight uppercase">
+                    <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-black leading-tight sm:leading-none tracking-tight uppercase">
                       {member.name}
                     </h1>
                   </div>

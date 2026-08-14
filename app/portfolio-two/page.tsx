@@ -65,7 +65,7 @@ function WorkCard({ project }: { project: typeof PORTFOLIO_TWO_PROJECTS[0] }) {
       {/* Info details row */}
       <div className="mt-5 flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-2xl font-black tracking-tight text-black uppercase hover:text-[#f26b2c] transition-colors">
+          <h3 className="text-xl sm:text-2xl font-black tracking-tight text-black uppercase hover:text-[#f26b2c] transition-colors">
             {project.title}
           </h3>
           <p className="text-xs font-mono text-neutral-500 font-bold uppercase tracking-wider mt-1">
@@ -84,7 +84,7 @@ function WorkCard({ project }: { project: typeof PORTFOLIO_TWO_PROJECTS[0] }) {
         </div>
 
         <button 
-          className="w-12 h-12 rounded-full flex items-center justify-center bg-black text-white shrink-0 hover:bg-[#f26b2c] transition-colors duration-300 shadow-md"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-black text-white shrink-0 hover:bg-[#f26b2c] transition-colors duration-300 shadow-md"
         >
           →
         </button>

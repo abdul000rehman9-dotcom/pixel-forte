@@ -99,7 +99,7 @@ export default function FeaturedWork() {
         {/* Animated Heading */}
         <h2 
           ref={headlineRef}
-          className="text-center font-display text-[14vw] sm:text-[11vw] font-extrabold leading-[0.9] text-black overflow-hidden m-0 p-0 block"
+          className="text-center font-display text-4xl sm:text-6xl md:text-8xl lg:text-[7rem] font-extrabold leading-[0.95] text-black overflow-hidden m-0 p-0 block"
         >
           <span className="block overflow-hidden pt-2">
             {renderLine("Featured work")}
@@ -180,7 +180,7 @@ interface WorkCardProps {
 function WorkCard({ img, tag, tags, marqueeLabel, big = false }: WorkCardProps) {
   return (
     <article className="group cursor-pointer w-full">
-      <div className={`zoom-wrap relative ${big ? "h-[440px]" : "h-[290px]"} overflow-hidden rounded-2xl bg-neutral-200/50`}>
+      <div className={`zoom-wrap relative ${big ? "h-[260px] sm:h-[340px] md:h-[440px]" : "h-[210px] sm:h-[260px] md:h-[290px]"} overflow-hidden rounded-2xl bg-neutral-200/50`}>
         <Image
           src={img}
           alt={tag}

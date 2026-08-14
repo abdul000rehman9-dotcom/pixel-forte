@@ -186,12 +186,12 @@ export default function PricingPage() {
 
       <main className="w-full bg-[#f4f1ea] text-black min-h-screen pt-24 pb-32 px-6 md:px-16 overflow-hidden">
         {/* HERO HEADER SECTION */}
-        <div className="max-w-7xl mx-auto text-center space-y-4 mt-12 mb-16">
+        <div className="max-w-7xl mx-auto text-center space-y-4 mt-6 sm:mt-12 mb-12 sm:mb-16">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 uppercase"
+            className="text-xl sm:text-3xl font-bold tracking-tight text-neutral-900 uppercase"
           >
             Pricing plans for
           </motion.h1>
@@ -199,14 +199,14 @@ export default function PricingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl sm:text-7xl lg:text-8xl font-black text-black tracking-tight leading-none uppercase"
+            className="text-3xl sm:text-6xl lg:text-8xl font-black text-black tracking-tight leading-[1.05] sm:leading-none uppercase"
           >
             every creative journey
           </motion.h2>
         </div>
 
         {/* BILLING TOGGLE SWITCH */}
-        <div className="flex items-center justify-center gap-4 mb-24">
+        <div className="flex items-center justify-center gap-4 mb-16 sm:mb-24">
           <button
             onClick={() => setIsYearly(false)}
             className={`text-sm font-bold uppercase tracking-wider transition-colors duration-300 ${
@@ -249,7 +249,7 @@ export default function PricingPage() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className={`group relative flex flex-col justify-between bg-white rounded-none border border-black/10 p-10 shadow-lg min-h-[680px] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${plan.hoverBg}`}
+                className={`group relative flex flex-col justify-between bg-white rounded-none border border-black/10 p-6 sm:p-10 shadow-lg min-h-auto lg:min-h-[680px] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${plan.hoverBg}`}
               >
                 {/* Pop tag on Growth card */}
                 {plan.hasPopularBadge && (

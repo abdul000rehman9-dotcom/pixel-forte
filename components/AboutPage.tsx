@@ -207,7 +207,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl sm:text-7xl lg:text-8xl font-bold text-white tracking-tight"
+            className="text-4xl sm:text-7xl lg:text-8xl font-bold text-white tracking-tight"
           >
             About us
           </motion.h1>
@@ -269,7 +269,7 @@ export default function AboutPage() {
       {/* SECTION 3: METRICS GRID SECTION */}
       <section className="py-20 bg-[#faf8f4] border-t border-b border-black/5 px-6 md:px-16">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-black text-black tracking-tight text-left mb-12 uppercase max-w-2xl">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-black tracking-tight text-left mb-8 sm:mb-12 uppercase max-w-2xl">
             Successful projects delivered with proven client satisfaction
           </h2>
 
@@ -479,7 +479,7 @@ export default function AboutPage() {
 
         {/* Big "Crafting" Text overlay */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-          <h2 className="text-7xl sm:text-9xl md:text-[12rem] lg:text-[14rem] font-black text-white/90 select-none uppercase tracking-tighter font-sans">
+          <h2 className="text-4xl sm:text-7xl md:text-9xl lg:text-[12rem] xl:text-[14rem] font-black text-white/90 select-none uppercase tracking-tighter font-sans">
             Crafting
           </h2>
         </div>

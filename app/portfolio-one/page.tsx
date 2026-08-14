@@ -41,7 +41,7 @@ function ScrollCard({ project }: { project: typeof PORTFOLIO_ONE_PROJECTS[0] }) 
         onClick={() => {
           router.push(`/portfolio-details?id=${project.id}`);
         }}
-        className="group cursor-pointer relative w-full max-w-5xl aspect-[2/1] bg-neutral-900 overflow-hidden shadow-2xl rounded-2xl border border-black/10 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        className="group cursor-pointer relative w-full max-w-5xl aspect-[4/3] sm:aspect-[16/9] md:aspect-[2/1] bg-neutral-900 overflow-hidden shadow-2xl rounded-2xl border border-black/10 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
       >
         <Image
           src={project.bannerImage}

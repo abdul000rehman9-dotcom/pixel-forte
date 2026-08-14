@@ -72,7 +72,7 @@ export default function TeamPage() {
         {/* Hero Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="\team\team-page-banner.webp"
+            src="/team/team-page-banner.webp"
             alt="The Crew Banner"
             fill
             className="object-cover"
@@ -97,7 +97,7 @@ export default function TeamPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl sm:text-7xl lg:text-8xl font-black text-white tracking-tight animate-[fade-in-up_1s_ease]"
+            className="text-4xl sm:text-7xl lg:text-8xl font-black text-white tracking-tight animate-[fade-in-up_1s_ease]"
           >
             The crew
           </motion.h1>

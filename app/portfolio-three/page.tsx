@@ -111,14 +111,14 @@ function StackCard({
       }}
       className="absolute inset-0 flex items-center justify-center will-change-transform cursor-pointer p-4"
     >
-      <div className="w-[min(82vw,1100px)] min-w-[300px] rounded-2xl bg-white p-6 sm:p-8 shadow-2xl border border-black/10 transition-all duration-300 hover:border-black/30">
-        <div className="aspect-[2/1] overflow-hidden rounded-xl relative w-full border border-black/5 bg-neutral-900">
+      <div className="w-[min(92vw,1100px)] min-w-[280px] rounded-2xl bg-white p-4 sm:p-8 shadow-2xl border border-black/10 transition-all duration-300 hover:border-black/30">
+        <div className="aspect-[16/10] sm:aspect-[2/1] overflow-hidden rounded-xl relative w-full border border-black/5 bg-neutral-900">
           <Image
             src={data.bannerImage}
             alt={data.title}
             fill
             referrerPolicy="no-referrer"
-            sizes="(max-w-1100px) 82vw, 1100px"
+            sizes="(max-w-1100px) 92vw, 1100px"
             className="object-cover transition-transform duration-700 hover:scale-105"
             draggable={false}
             priority={index === 0}
@@ -129,16 +129,16 @@ function StackCard({
             </span>
           </div>
         </div>
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 text-left items-start">
+        <div className="mt-4 sm:mt-6 grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 text-left items-start">
           <div>
-            <h3 className="text-2xl sm:text-3.5xl font-black text-black uppercase tracking-tight hover:text-[#f26b2c] transition-colors">
+            <h3 className="text-xl sm:text-2xl md:text-3.5xl font-black text-black uppercase tracking-tight hover:text-[#f26b2c] transition-colors">
               {data.title}
             </h3>
-            <p className="text-xs font-mono text-neutral-500 font-bold uppercase tracking-widest mt-1">
+            <p className="text-xs font-mono text-neutral-500 font-bold uppercase tracking-widest mt-0.5 sm:mt-1">
               {data.subtitle}
             </p>
           </div>
-          <p className="text-xs sm:text-sm leading-relaxed text-neutral-600 font-medium line-clamp-3">
+          <p className="text-xs sm:text-sm leading-relaxed text-neutral-600 font-medium line-clamp-2 sm:line-clamp-3">
             {data.description.paragraphs[0]}
           </p>
         </div>

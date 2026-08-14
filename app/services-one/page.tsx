@@ -224,7 +224,7 @@ export default function ServicesOnePage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl sm:text-7xl lg:text-8xl font-black text-white tracking-tight"
+              className="text-4xl sm:text-7xl lg:text-8xl font-black text-white tracking-tight"
             >
               Our Services
             </motion.h1>
@@ -314,7 +314,7 @@ export default function ServicesOnePage() {
               <span>Who we are</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-black leading-tight uppercase tracking-tight">
+            <h1 className="text-2.5xl sm:text-4xl lg:text-6xl font-black text-black leading-tight uppercase tracking-tight">
               We combine thoughtful strategy and bold creativity to create brand identities that truly stand out in the market
             </h1>
 

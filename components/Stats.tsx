@@ -84,7 +84,7 @@ export default function CraftedSection() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display font-medium text-4xl md:text-5xl lg:text-6xl text-white leading-[1.1] max-w-2xl uppercase"
+              className="font-display font-medium text-2.5xl sm:text-4xl md:text-5xl lg:text-6xl text-white leading-[1.15] sm:leading-[1.1] max-w-2xl uppercase"
             >
               Every step carefully crafted to push your brand forward with purpose
             </motion.h2>
@@ -194,7 +194,18 @@ export default function CraftedSection() {
         </div>
 
         {/* Right Column: Beautiful tall vertical showcase image */}
-        <div className="lg:col-span-5 relative hidden lg:block">
+        <div className="lg:col-span-5 relative mt-6 lg:mt-0">
+          <div className="block lg:hidden relative aspect-[4/3] sm:aspect-[16/9] rounded-[24px] overflow-hidden border border-white/10 bg-zinc-900 shadow-xl">
+            <Image
+              src="/images/idotive-service-image-two-p-1080.webp"
+              alt="The Journey Visual representation"
+              fill
+              sizes="(max-width: 1024px) 100vw, 500px"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-black/10 mix-blend-multiply pointer-events-none" />
+          </div>
+
           <motion.div
             style={{ 
               x, 
@@ -204,7 +215,7 @@ export default function CraftedSection() {
               opacity, 
               transformPerspective: 1200 
             }}
-            className="relative aspect-[3/4] rounded-[32px] overflow-hidden border border-white/10 bg-zinc-900 shadow-2xl will-change-transform"
+            className="hidden lg:block relative aspect-[3/4] rounded-[32px] overflow-hidden border border-white/10 bg-zinc-900 shadow-2xl will-change-transform"
           >
             {/* Corrected path: Removed 'public' and fixed backslashes for Next.js */}
             <Image

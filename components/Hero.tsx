@@ -236,7 +236,7 @@ export default function Hero() {
         ref={headlineRef}
         className="relative z-10 max-w-5xl mx-auto flex flex-col items-center w-full overflow-visible"
       >
-        <h1 className="text-5xl font-bold tracking-tight text-black md:text-7xl lg:text-8xl font-sans leading-[1.1] py-2 overflow-visible">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-black font-sans leading-[1.1] py-2 overflow-visible">
           <span className="block overflow-visible">{renderLine("Branding through")}</span>
           <span className="block mt-1 overflow-visible">{renderLine("brilliant design")}</span>
         </h1>

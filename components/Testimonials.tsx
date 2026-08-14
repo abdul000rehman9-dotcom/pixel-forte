@@ -88,15 +88,15 @@ export default function Testimonials() {
             Testimonial
           </span>
 
-          <h2 className="mt-4 lg:mt-5 max-w-[700px] text-[clamp(28px,4vw,68px)] font-bold leading-[1.05] lg:leading-[0.95] tracking-[-0.04em] lg:tracking-[-0.06em] text-neutral-950">
+          <h2 className="mt-4 lg:mt-5 max-w-[700px] text-2.5xl sm:text-4xl lg:text-6xl font-bold leading-[1.15] lg:leading-[0.95] tracking-tight lg:tracking-[-0.04em] text-neutral-950">
             Success stories from the brands we’ve helped
           </h2>
 
-          <p className="mt-5 lg:mt-7 max-w-[560px] text-[15px] sm:text-[16px] leading-relaxed text-neutral-500">
+          <p className="mt-4 lg:mt-7 max-w-[560px] text-sm sm:text-base leading-relaxed text-neutral-500">
             See how we help brands grow through smart strategy, bold design, and impactful campaigns that engage audiences and drive lasting results.
           </p>
 
-          <div className="mt-8 lg:mt-auto pb-6 lg:pb-10">
+          <div className="mt-6 lg:mt-auto pb-4 lg:pb-10">
             <AnimatePresence mode="wait">
               <motion.blockquote
                 key={item.quote}
@@ -104,7 +104,7 @@ export default function Testimonials() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.4 }}
-                className="max-w-[760px] text-[clamp(18px,2.2vw,34px)] font-semibold leading-[1.35] tracking-[-0.03em] lg:tracking-[-0.04em] text-neutral-900"
+                className="max-w-[760px] text-lg sm:text-2xl lg:text-3xl font-semibold leading-[1.4] tracking-tight text-neutral-900"
               >
                 &ldquo;{item.quote}&rdquo;
               </motion.blockquote>

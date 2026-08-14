@@ -85,13 +85,13 @@ export function Services() {
   return (
     <section className="bg-[#f4f1ea] py-24 px-6 overflow-hidden">
       <div className="mx-auto max-w-6xl">
-        <p className="text-center text-xs tracking-[0.3em] text-neutral-500 uppercase">Our Services</p>
-        <h2 className="mt-4 text-center font-serif text-5xl md:text-6xl text-neutral-900 leading-[1.05]">
-          Where creative thinking meets<br />strategic brand impact
+        <p className="text-center text-[10px] sm:text-xs tracking-[0.3em] text-neutral-500 uppercase">Our Services</p>
+        <h2 className="mt-4 text-center font-serif text-3xl sm:text-4xl md:text-6xl text-neutral-900 leading-[1.1] sm:leading-[1.05]">
+          Where creative thinking meets<br className="hidden sm:inline" /> strategic brand impact
         </h2>
 
         {/* space-y-14 provides physical clearance for the 3D rotation */}
-        <div className="mt-20 space-y-14">
+        <div className="mt-14 sm:mt-20 space-y-10 sm:space-y-14">
           {SERVICES.map((s, i) => {
             const isHovered = hoveredIndex === i;
             const isClicked = clickedIndex === i;
@@ -143,20 +143,20 @@ export function Services() {
                       height: "100%",
                       width: "100%"
                     }}
-                    className="absolute inset-0 bg-[#faf9f6] border border-[#e1dacb] rounded-lg flex items-center px-8 md:px-10 py-6 shadow-sm"
+                    className="absolute inset-0 bg-[#faf9f6] border border-[#e1dacb] rounded-lg flex items-center px-4 sm:px-8 md:px-10 py-4 sm:py-6 shadow-sm"
                   >
-                    <div className="grid grid-cols-12 items-center gap-6 w-full">
-                      <div className="col-span-12 md:col-span-5 flex items-center gap-6">
-                        <span className="text-neutral-400 text-base font-mono">{s.n}</span>
-                        <span className="h-px w-8 bg-neutral-300" />
-                        <h3 className="font-serif text-2xl md:text-3xl text-neutral-900 tracking-tight">{s.title}</h3>
+                    <div className="grid grid-cols-12 items-center gap-3 sm:gap-6 w-full">
+                      <div className="col-span-12 md:col-span-5 flex items-center gap-3 sm:gap-6">
+                        <span className="text-neutral-400 text-sm sm:text-base font-mono">{s.n}</span>
+                        <span className="h-px w-6 sm:w-8 bg-neutral-300" />
+                        <h3 className="font-serif text-xl sm:text-2xl md:text-3xl text-neutral-900 tracking-tight">{s.title}</h3>
                       </div>
                       
-                      <p className="col-span-12 md:col-span-6 text-sm leading-relaxed text-neutral-600 font-normal">
+                      <p className="col-span-12 md:col-span-6 text-xs sm:text-sm leading-relaxed text-neutral-600 font-normal line-clamp-2 md:line-clamp-none">
                         {s.desc}
                       </p>
                       
-                      <div className="col-span-12 md:col-span-1 flex justify-end text-neutral-700">
+                      <div className="col-span-12 md:col-span-1 hidden md:flex justify-end text-neutral-700">
                         <Icon i={i} />
                       </div>
                     </div>
