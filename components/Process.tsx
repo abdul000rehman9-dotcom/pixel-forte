@@ -187,14 +187,14 @@ export default function BenefitsBento() {
           <div className="order-3 lg:order-1 flex flex-col justify-end py-4">
             <div className="space-y-3">
               <div className="flex items-center -space-x-3">
-                <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden relative shadow-md">
-                  <Image src="/images/avatar-1.jpg" alt="Member 1" fill className="object-cover" />
+                <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden relative shadow-md bg-neutral-200">
+                  <Image src="/images/idotive-home-athour-1.webp" alt="Member 1" fill sizes="48px" className="object-cover" />
                 </div>
-                <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden relative shadow-md">
-                  <Image src="/images/avatar-2.jpg" alt="Member 2" fill className="object-cover" />
+                <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden relative shadow-md bg-neutral-200">
+                  <Image src="/images/idotive-home-athour-2.webp" alt="Member 2" fill sizes="48px" className="object-cover" />
                 </div>
-                <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden relative shadow-md">
-                  <Image src="/images/avatar-3.jpg" alt="Member 3" fill className="object-cover" />
+                <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden relative shadow-md bg-neutral-200">
+                  <Image src="/images/idotive-home-athour-3.webp" alt="Member 3" fill sizes="48px" className="object-cover" />
                 </div>
               </div>
               <div className="pt-2">
