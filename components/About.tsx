@@ -135,34 +135,32 @@ export default function About() {
       className="relative overflow-hidden bg-[#faf8f3] px-6 pt-20 pb-16 sm:px-12 lg:px-20 lg:pt-28 lg:pb-24 z-10"
     >
       {/* 3D Rotating Right Side Graphic */}
-      <motion.div
-        style={{ rotate: rotateValue }}
-        className="hidden lg:block absolute right-[-4%] top-[4%] z-0 pointer-events-none lg:w-[480px] lg:h-[480px] xl:w-[550px] xl:h-[550px]"
+      <div
+        className="hidden lg:block absolute right-[2%] xl:right-[4%] top-[20%] lg:top-[24%] xl:top-[26%] z-0 pointer-events-none w-[260px] h-[260px] lg:w-[300px] lg:h-[300px] xl:w-[340px] xl:h-[340px] animate-spin-continuous"
         aria-hidden="true"
       >
         <Image
           src="/icons/idotive-icon-8.png"
-          alt=""
+          alt="Rotating 3D Graphic"
           fill
           className="object-contain"
         />
-      </motion.div>
+      </div>
 
       <div className="relative z-10 mx-auto max-w-[1550px]">
         {/* Mobile/Tablet Rotating Star Graphic */}
         <div className="block lg:hidden mb-6 text-left">
-          <motion.div
-            style={{ rotate: rotateValue }}
-            className="w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] relative pointer-events-none"
+          <div
+            className="w-[52px] h-[52px] sm:w-[64px] sm:h-[64px] relative pointer-events-none animate-spin-continuous"
             aria-hidden="true"
           >
             <Image
               src="/icons/idotive-icon-8.png"
-              alt=""
+              alt="Rotating 3D Graphic"
               fill
               className="object-contain"
             />
-          </motion.div>
+          </div>
         </div>
 
         <div className="mb-6 text-xs font-bold uppercase tracking-[0.25em] text-neutral-400">

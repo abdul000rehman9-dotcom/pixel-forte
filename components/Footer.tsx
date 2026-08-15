@@ -73,11 +73,11 @@ export default function Footer() {
         {/* Contact Column */}
         <div className="md:col-span-5 flex flex-col justify-between gap-8 text-left">
           <div>
-            <div className="flex items-center gap-2 mb-6">
-              <div className="px-2.5 py-1 bg-charcoal rounded-md flex items-center justify-center border border-cream/10">
-                <span className="font-display font-black text-xs text-[#f26b2c] tracking-tighter">Pf.</span>
+            <div className="flex items-center gap-2.5 mb-6">
+              <div className="px-3 py-1.5 bg-charcoal rounded-md flex items-center justify-center border border-cream/10">
+                <span className="font-display font-black text-sm text-[#f26b2c] tracking-tighter">Pf.</span>
               </div>
-              <span className="font-display font-bold text-xl tracking-tight text-cream">
+              <span className="font-display font-bold text-2xl tracking-tight text-cream">
                 pixel-forte
               </span>
             </div>

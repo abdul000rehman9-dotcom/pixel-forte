@@ -53,8 +53,8 @@ function HeroCard({ card, index, isMobile = false }: { card: CardItem; index: nu
 
   if (isMobile) {
     return (
-      <div className="w-full rounded-[3px] bg-white p-2 shadow-sm border border-black/5 relative">
-        <div className="aspect-[4/3] w-full overflow-hidden rounded-[1px] bg-gray-100 relative">
+      <div className="w-full rounded-[4px] bg-white p-2.5 shadow-sm border border-black/5 relative flex flex-col justify-between h-[210px]">
+        <div className="aspect-[4/3] w-full overflow-hidden rounded-[2px] bg-gray-100 relative flex-1">
           {card.type === "video" ? (
             <LazyVideo src={card.img} isPriority={index < 4} className="h-full w-full object-cover" />
           ) : (
@@ -62,14 +62,14 @@ function HeroCard({ card, index, isMobile = false }: { card: CardItem; index: nu
               src={card.img}
               alt={card.title}
               fill
-              sizes="(max-width: 640px) 50vw, 240px"
+              sizes="(max-width: 640px) 50vw, 280px"
               className="object-cover"
               priority={index < 2}
               referrerPolicy="no-referrer"
             />
           )}
         </div>
-        <p className="mt-2 text-center text-[11px] font-bold text-black truncate px-1 uppercase tracking-tight">
+        <p className="mt-2 text-center text-[11px] font-bold text-black truncate px-1 uppercase tracking-tight h-5 flex items-center justify-center">
           {card.title}
         </p>
       </div>
@@ -77,8 +77,8 @@ function HeroCard({ card, index, isMobile = false }: { card: CardItem; index: nu
   }
 
   return (
-    <div className="animated-card w-[280px] flex-shrink-0 rounded-[3px] bg-white p-2.5 shadow-[0_4px_25px_rgba(0,0,0,0.04)] border border-black/5 will-change-transform transition-transform duration-300 ease-out hover:scale-105 hover:z-50">
-      <div className="aspect-[4/3] w-full overflow-hidden rounded-[1px] bg-gray-100 relative">
+    <div className="animated-card w-[350px] h-[315px] flex-shrink-0 rounded-[4px] bg-white p-3 shadow-[0_4px_25px_rgba(0,0,0,0.04)] border border-black/5 will-change-transform transition-transform duration-300 ease-out hover:scale-105 hover:z-50 flex flex-col justify-between">
+      <div className="w-full h-[255px] overflow-hidden rounded-[2px] bg-gray-100 relative">
         {card.type === "video" ? (
           <LazyVideo src={card.img} isPriority={isPrimarySet} className="h-full w-full object-cover pointer-events-none" />
         ) : (
@@ -86,14 +86,14 @@ function HeroCard({ card, index, isMobile = false }: { card: CardItem; index: nu
             src={card.img}
             alt={card.title}
             fill
-            sizes="280px"
+            sizes="350px"
             className="object-cover pointer-events-none"
             priority={isAboveFold}
             referrerPolicy="no-referrer"
           />
         )}
       </div>
-      <p className="mt-3 text-center font-sans text-xs font-bold tracking-tight text-black uppercase">
+      <p className="mt-2 text-center font-sans text-xs font-bold tracking-tight text-black uppercase truncate h-6 flex items-center justify-center px-1">
         {card.title}
       </p>
     </div>
@@ -160,13 +160,13 @@ export default function Hero() {
     const slider = sliderRef.current;
     if (slider) {
       const cards = slider.querySelectorAll<HTMLElement>(".animated-card");
-      // 280px width + 24px gap = 304px per card step
-      const cardStep = 304;
+      // 350px width + 24px gap = 374px per card step
+      const cardStep = 374;
       const singleSetWidth = CARDS_DATA.length * cardStep;
 
       const animation = gsap.to(slider, {
         x: `-=${singleSetWidth}`,
-        duration: 32,
+        duration: 35,
         ease: "none",
         repeat: -1,
         onUpdate: function () {
@@ -177,7 +177,7 @@ export default function Hero() {
           cards.forEach((card, i) => {
             // Pure mathematical calculation - NO getBoundingClientRect() to avoid layout thrashing!
             const cardLeft = sliderX + i * cardStep;
-            const cardCenter = cardLeft + 140;
+            const cardCenter = cardLeft + 175;
 
             const distanceFromCenter = (cardCenter - centerX) / (viewportWidth * 0.55);
             const yOffset = Math.pow(Math.abs(distanceFromCenter), 2) * 150;
@@ -244,7 +244,7 @@ export default function Hero() {
         <a
           ref={buttonRef}
           href="#contact"
-          className="group relative inline-flex h-[42px] items-center justify-center overflow-hidden rounded-none bg-black px-6 text-[12px] font-bold uppercase tracking-wider text-white transition-colors duration-300 mt-4"
+          className="group relative inline-flex h-[48px] sm:h-[50px] items-center justify-center overflow-hidden rounded-none bg-black px-8 text-[13px] sm:text-[14px] font-bold uppercase tracking-wider text-white transition-colors duration-300 mt-6 sm:mt-8"
         >
           <span className="absolute inset-0 h-full w-full translate-y-full bg-[#f26b2c] transition-transform duration-300 ease-out group-hover:translate-y-0"></span>
           <span className="relative z-10 block h-4 overflow-hidden">
@@ -258,11 +258,11 @@ export default function Hero() {
         </a>
       </div>
 
-      <div className="hidden md:flex relative w-full overflow-visible mt-8 mb-2 justify-center items-start h-[210px]">
+      <div className="hidden md:flex relative w-full overflow-visible mt-14 sm:mt-16 mb-4 justify-center items-start h-[330px]">
         <div
           ref={sliderRef}
           className="flex gap-6 absolute left-0 items-start will-change-transform"
-          style={{ width: `${duplicatedCards.length * 304}px` }}
+          style={{ width: `${duplicatedCards.length * 374}px` }}
         >
           {duplicatedCards.map((card, index) => (
             <HeroCard key={`${card.id}-${index}`} card={card} index={index} />
@@ -270,21 +270,23 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="md:hidden grid grid-cols-2 gap-4 w-full max-w-sm mx-auto mt-2 mb-4">
+      <div className="md:hidden grid grid-cols-2 gap-4 w-full max-w-sm mx-auto mt-8 mb-6">
         {mobileCards.map((card, index) => (
           <HeroCard key={card.id} card={card} index={index} isMobile />
         ))}
       </div>
 
-      <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center gap-1 mt-10 clear-both">
-        <Image
-          src={rotateIcon}
-          alt="Rotating Icon"
-          width={50}
-          height={50}
-          className="animate-[spin_6s_linear_infinite] object-contain w-10 h-10"
-        />
-        <p className="text-sm font-medium leading-relaxed text-black/70 max-w-xl md:text-[15px]">
+      <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center gap-4 sm:gap-5 mt-14 sm:mt-18 md:mt-20 mb-4 px-4 clear-both">
+        <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center">
+          <Image
+            src={rotateIcon}
+            alt="Rotating Icon"
+            width={64}
+            height={64}
+            className="animate-spin-continuous object-contain w-full h-full"
+          />
+        </div>
+        <p className="text-sm sm:text-[15px] font-normal leading-relaxed text-neutral-600 max-w-xl text-center">
           We turn bold ideas into impactful brand experiences that inspire audiences, evoke emotion,
           and deliver measurable results through creativity and strategic design.
         </p>

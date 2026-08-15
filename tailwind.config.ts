@@ -13,9 +13,9 @@ const config: Config = {
         ink: "#0A0A0A",
       },
       fontFamily: {
-        sans: ["Satoshi", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
-        display: ["Satoshi", "sans-serif"],
-        mono: ["Satoshi", "monospace"],
+        sans: ["WebsiteCustomFont", "Satoshi", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        display: ["WebsiteCustomFont", "Satoshi", "sans-serif"],
+        mono: ["WebsiteCustomFont", "Satoshi", "monospace"],
       },
       transitionTimingFunction: {
         smooth: "cubic-bezier(0.22,1,0.36,1)",

@@ -115,7 +115,7 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
   ];
 
   return (
-    <header className={`relative z-50 w-full ${transparent ? 'bg-transparent border-transparent' : 'border-b border-black/10 bg-[#f9f8f4]'} px-6 py-4 md:px-16 md:py-5`}>
+    <header className={`relative z-50 w-full ${transparent ? 'bg-transparent border-transparent' : 'border-b border-black/10 bg-[#f9f8f4]'} px-6 py-3 md:px-16 md:py-3.5`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between">
         {/* Logo */}
         <Link
@@ -124,11 +124,11 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
             setIsOpen(false);
             setActiveSubMenu(null);
           }}
-          className="group flex items-center gap-2 cursor-pointer text-left"
+          className="group flex items-center gap-2.5 cursor-pointer text-left shrink-0"
           id="header-logo-btn"
         >
           <motion.div
-            className="group flex items-center gap-2"
+            className="group flex items-center gap-2.5 shrink-0"
             whileHover="hover"
             initial="rest"
             animate="rest"
@@ -137,27 +137,27 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
             <motion.span
               variants={{ rest: { rotate: 0 }, hover: { rotate: 360 } }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="grid h-9 w-9 place-items-center rounded-full bg-[#FF5A1F] text-white font-semibold text-[13px] tracking-tight"
+              className="grid h-11 w-11 place-items-center rounded-full bg-[#FF5A1F] text-white font-bold text-[15px] tracking-tight shrink-0 shadow-sm"
             >
               Pf
             </motion.span>
 
             {/* pixelforte text */}
-            <span className="text-2xl font-semibold tracking-tight text-[#111] transition-colors group-hover:text-[#FF5A1F]">
+            <span className="text-[26px] md:text-[28px] font-bold tracking-tight text-[#111] transition-colors group-hover:text-[#FF5A1F] whitespace-nowrap">
               pixelforte
             </span>
           </motion.div>
         </Link>
 
         {/* Right Controls */}
-        <div className="flex items-center gap-4 sm:gap-5">
+        <div className="flex items-center gap-4 sm:gap-6 shrink-0">
           {/* Button: "Let's Collaborate" (hidden on small/mobile, visible on sm and up) */}
           <button
             onClick={() => {
               onContactClick();
               setIsOpen(false);
             }}
-            className="group relative hidden sm:inline-flex h-[38px] items-center justify-center overflow-hidden rounded-none bg-black px-5 text-[10px] md:text-[11px] font-bold uppercase tracking-wider text-white transition-all duration-500 cursor-pointer"
+            className="group relative hidden sm:inline-flex h-[44px] items-center justify-center overflow-hidden rounded-none bg-black px-6 text-[11px] md:text-[12px] font-bold uppercase tracking-wider text-white transition-all duration-500 cursor-pointer whitespace-nowrap shrink-0"
           >
             {/* Dual sliding background (orange left, white right) */}
             <div className="absolute inset-0 w-full h-full flex translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0">
@@ -179,12 +179,12 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
           {/* Trigger Button (4-Dot Icon or X) */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="group flex h-8 w-8 items-center justify-center text-black transition-transform duration-200 active:scale-95 cursor-pointer"
+            className="group flex h-10 w-10 items-center justify-center text-black transition-transform duration-200 active:scale-95 cursor-pointer"
             aria-label="Toggle Menu"
           >
             {isOpen ? (
               <svg
-                className="h-5 w-5 transition-transform duration-300 group-hover:rotate-90"
+                className="h-6 w-6 transition-transform duration-300 group-hover:rotate-90"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -197,11 +197,11 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
                 />
               </svg>
             ) : (
-              <div className="grid h-3.5 w-3.5 grid-cols-2 gap-[3px] transition-transform duration-300 group-hover:scale-110">
-                <span className="h-1.5 w-1.5 rounded-full bg-black group-hover:bg-orange-accent transition-colors" />
-                <span className="h-1.5 w-1.5 rounded-full bg-black group-hover:bg-orange-accent transition-colors" />
-                <span className="h-1.5 w-1.5 rounded-full bg-black group-hover:bg-orange-accent transition-colors" />
-                <span className="h-1.5 w-1.5 rounded-full bg-black group-hover:bg-orange-accent transition-colors" />
+              <div className="grid h-5 w-5 grid-cols-2 gap-1 transition-transform duration-300 group-hover:scale-110">
+                <span className="h-2 w-2 rounded-full bg-black group-hover:bg-[#FF5A1F] transition-colors" />
+                <span className="h-2 w-2 rounded-full bg-black group-hover:bg-[#FF5A1F] transition-colors" />
+                <span className="h-2 w-2 rounded-full bg-black group-hover:bg-[#FF5A1F] transition-colors" />
+                <span className="h-2 w-2 rounded-full bg-black group-hover:bg-[#FF5A1F] transition-colors" />
               </div>
             )}
           </button>

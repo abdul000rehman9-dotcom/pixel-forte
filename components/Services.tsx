@@ -83,15 +83,15 @@ export function Services() {
   };
 
   return (
-    <section className="bg-[#f4f1ea] py-24 px-6 overflow-hidden">
-      <div className="mx-auto max-w-6xl">
+    <section className="bg-[#f4f1ea] py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <div className="mx-auto w-full max-w-[94%] sm:max-w-[92%] lg:max-w-[90%]">
         <p className="text-center text-[10px] sm:text-xs tracking-[0.3em] text-neutral-500 uppercase">Our Services</p>
         <h2 className="mt-4 text-center font-serif text-3xl sm:text-4xl md:text-6xl text-neutral-900 leading-[1.1] sm:leading-[1.05]">
           Where creative thinking meets<br className="hidden sm:inline" /> strategic brand impact
         </h2>
 
         {/* space-y-14 provides physical clearance for the 3D rotation */}
-        <div className="mt-14 sm:mt-20 space-y-10 sm:space-y-14">
+        <div className="mt-14 sm:mt-20 space-y-10 sm:space-y-14 w-full">
           {SERVICES.map((s, i) => {
             const isHovered = hoveredIndex === i;
             const isClicked = clickedIndex === i;
@@ -120,7 +120,7 @@ export function Services() {
                 <motion.div
                   animate={{ 
                     rotateX,
-                    scale: isHovered || isClicked ? 0.95 : 1 // Recedes slightly to stay elegantly spaced
+                    scale: isHovered || isClicked ? 0.96 : 1 // Recedes slightly to stay elegantly spaced
                   }}
                   transition={{ 
                     duration: isClicked ? 0.95 : 0.55, 
@@ -162,7 +162,7 @@ export function Services() {
                     </div>
                   </motion.div>
 
-                  {/* TOP FACE: Image presentation */}
+                  {/* TOP FACE: Image presentation (No overlay text on hover) */}
                   <div
                     style={{
                       transform: `rotateX(90deg) translateZ(${halfHeight}px)`,
@@ -180,12 +180,6 @@ export function Services() {
                       sizes="(max-width: 1200px) 100vw, 1200px"
                       priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/15" />
-                    
-                    <div className="absolute bottom-8 left-10 text-white z-10">
-                      <p className="text-xs uppercase tracking-[0.2em] opacity-85">{s.n} / Service</p>
-                      <h4 className="font-serif text-2xl md:text-3xl mt-1 tracking-tight">{s.title}</h4>
-                    </div>
                   </div>
 
                   {/* BOTTOM FACE: Color-matched stabilizing structural panel */}
