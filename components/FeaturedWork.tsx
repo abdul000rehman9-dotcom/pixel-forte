@@ -99,14 +99,18 @@ export default function FeaturedWork() {
         {/* Animated Heading */}
         <h2 
           ref={headlineRef}
-          className="text-center font-display text-4xl sm:text-6xl md:text-8xl lg:text-[7rem] font-extrabold leading-[0.95] text-black overflow-hidden m-0 p-0 block"
+          className="text-center font-display text-5xl sm:text-7xl md:text-8xl lg:text-[8rem] xl:text-[9rem] font-extrabold leading-[0.92] text-black overflow-hidden m-0 p-0 block tracking-tight"
         >
-          <span className="block overflow-hidden pt-2">
-            {renderLine("Featured work")}
+          <span className="block overflow-hidden pt-1">
+            {renderLine("Featured")}
+          </span>
+          <span className="block overflow-hidden -mt-1 sm:-mt-2">
+            {renderLine("work")}
           </span>
         </h2>
         
-        <div className="mx-auto my-5 h-8 w-px bg-black/20" />
+        {/* Divider line below both Featured and work text */}
+        <div className="mx-auto my-6 sm:my-8 h-8 sm:h-10 w-px bg-black/20" />
         
         {/* Animated Paragraph */}
         <p ref={paraRef} className="mx-auto max-w-xl text-center text-black/70 text-sm sm:text-base will-change-transform">

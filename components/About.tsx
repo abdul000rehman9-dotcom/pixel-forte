@@ -105,14 +105,11 @@ export default function About() {
   const smoothProgress = useSpring(scrollYProgress, springConfig);
   const smoothBottomProgress = useSpring(bottomScrollY, springConfig);
 
-  const rotateValue = useTransform(smoothProgress, [0, 1], [0, 240]);
-
   const textOpacity1 = useTransform(scrollYProgress, [0.15, 0.28], ["#d4d4d8", "#171717"]);
   const textOpacity2 = useTransform(scrollYProgress, [0.28, 0.42], ["#d4d4d8", "#171717"]);
   const textOpacity3 = useTransform(scrollYProgress, [0.42, 0.55], ["#d4d4d8", "#171717"]);
 
   // --- Dynamic Responsive Image Placement & Animation Config ---
-  // Calculates card translation offsets dynamically to ensure zero overlap and zero overflow on all viewports
   const cardSpread = useTransform(smoothBottomProgress, [0.1, 0.75], [0, 1]);
   const cardOffset = 
     screenWidth < 400 ? 55 : 
@@ -186,27 +183,51 @@ export default function About() {
             </motion.span>
           </h2>
 
-          <div className="mt-8 flex flex-col items-start gap-6 max-w-[480px]">
-            <div className="flex items-center -space-x-3.5">
-              {AVATARS.map((avatar, i) => (
-                <div
-                  key={i}
-                  className="h-12 w-12 sm:h-14 sm:w-14 overflow-hidden rounded-full border-[3px] border-[#faf8f3] shadow-sm bg-neutral-200"
-                >
-                  <Image
-                    src={avatar.src}
-                    alt="Team member preview"
-                    width={56}
-                    height={56}
-                    className="h-full w-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
-              ))}
+          <div className="mt-8 flex flex-col items-start gap-6 max-w-[550px]">
+            
+            {/* UPDATED AVATARS + PLUS BUTTON SECTION */}
+            <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+              {/* 1st Image: Square */}
+              <div className="h-16 w-16 sm:h-20 sm:w-20 overflow-hidden rounded-xl sm:rounded-2xl shadow-sm bg-neutral-200 shrink-0 relative">
+                <Image
+                  src={AVATARS[0].src}
+                  alt="Team member 1"
+                  fill
+                  sizes="(max-width: 640px) 64px, 80px"
+                  className="object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+
+              {/* 2nd Image: Circle (Middle) */}
+              <div className="h-16 w-16 sm:h-20 sm:w-20 overflow-hidden rounded-full shadow-sm bg-neutral-200 shrink-0 relative">
+                <Image
+                  src={AVATARS[1].src}
+                  alt="Team member 2"
+                  fill
+                  sizes="(max-width: 640px) 64px, 80px"
+                  className="object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+
+              {/* 3rd Image: Square */}
+              <div className="h-16 w-16 sm:h-20 sm:w-20 overflow-hidden rounded-xl sm:rounded-2xl shadow-sm bg-neutral-200 shrink-0 relative">
+                <Image
+                  src={AVATARS[2].src}
+                  alt="Team member 3"
+                  fill
+                  sizes="(max-width: 640px) 64px, 80px"
+                  className="object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+
+              {/* 4th Element: Orange Circle Plus Button */}
               <button 
                 type="button"
                 aria-label="View all team members"
-                className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-[#ff6b35] text-white text-lg sm:text-xl font-light hover:scale-105 transition-transform shadow-sm"
+                className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-[#f26b2c] text-white text-2xl sm:text-3xl font-light hover:scale-105 transition-transform shadow-sm shrink-0 cursor-pointer"
               >
                 +
               </button>
@@ -235,12 +256,12 @@ export default function About() {
           </div>
         </div>
 
-        {/* Lower Row Section: Structured for perfect responsive hierarchy */}
+        {/* Lower Row Section */}
         <div 
           ref={bottomRowRef}
           className="mt-8 sm:mt-10 pt-6 border-t border-neutral-200/70 flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-4 items-center"
         >
-          {/* 1. Stats Numbering Column - Stays on TOP on mobile, in middle/left on desktop */}
+          {/* 1. Stats Numbering Column */}
           <div className="order-1 md:order-2 md:col-span-4 lg:col-span-4 flex items-center gap-6 sm:gap-8 justify-start w-full pb-4 md:pb-0 border-b md:border-b-0 border-neutral-200/60">
             <div>
               <div className="font-display text-[2.2rem] sm:text-[3rem] lg:text-[3.2rem] font-bold leading-none tracking-tighter text-neutral-900 flex items-center">
@@ -263,9 +284,9 @@ export default function About() {
             </div>
           </div>
 
-          {/* 2. Mobile Bottom Section / Desktop Columns: Pills on left, Images on right */}
+          {/* 2. Mobile Bottom Section / Desktop Columns */}
           <div className="order-2 w-full flex items-center justify-between gap-4 md:contents">
-            {/* Pill Buttons Div (Left side) */}
+            {/* Pill Buttons Div */}
             <div className="md:order-1 md:col-span-4 lg:col-span-3 flex flex-col items-start gap-1.5">
               {PILLS.map((pill) => (
                 <span
@@ -277,11 +298,11 @@ export default function About() {
               ))}
             </div>
 
-            {/* Stacked Images Container (Right side, sized to match tab bar & decreasing dynamically) */}
+            {/* Stacked Images Container */}
             <div className="md:order-3 md:col-span-4 lg:col-span-5 flex items-center justify-end lg:justify-center pr-6 xs:pr-8 sm:pr-10 md:pr-0 overflow-visible">
               <div className="relative w-[65px] xs:w-[75px] sm:w-[90px] md:w-[105px] lg:w-[125px] aspect-[1.35/1] flex-shrink-0">
                 
-                {/* Card 3 (Bottom Layer, slides to the right) */}
+                {/* Card 3 */}
                 <motion.div 
                   style={{ 
                     x: card3X, 
@@ -303,7 +324,7 @@ export default function About() {
                   </motion.div>
                 </motion.div>
 
-                {/* Card 2 (Middle Layer, rises straight up) */}
+                {/* Card 2 */}
                 <motion.div 
                   style={{ 
                     y: card2Y, 
@@ -324,7 +345,7 @@ export default function About() {
                   </motion.div>
                 </motion.div>
 
-                {/* Card 1 (Top Layer, slides to the left) */}
+                {/* Card 1 */}
                 <motion.div 
                   style={{ 
                     x: card1X, 

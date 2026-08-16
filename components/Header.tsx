@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import Link from 'next/link'; // Native Next.js Link
+import Link from 'next/link';
+import Image from 'next/image';
 
 type PageType = string;
 
@@ -25,7 +26,6 @@ interface MenuItem {
 export default function Header ({ activePage, setActivePage, onContactClick, transparent = false }: HeaderProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
-
   const [isNavigating, setIsNavigating] = useState<boolean>(false);
 
   const toggleSubMenu = (menuKey: string) => {
@@ -52,7 +52,6 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
       setIsNavigating(false);
     }, 500);
   };
-
 
   const menuItems: MenuItem[] = [
     { name: 'Home', type: 'link', page: 'home' },
@@ -115,57 +114,64 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
   ];
 
   return (
-    <header className={`relative z-50 w-full ${transparent ? 'bg-transparent border-transparent' : 'border-b border-black/10 bg-[#f9f8f4]'} px-6 py-3 md:px-16 md:py-3.5`}>
+    <header className={`relative z-50 w-full ${transparent ? 'bg-transparent border-transparent' : 'border-b border-black/10 bg-[#f9f8f4]'} px-4 sm:px-8 md:px-12 py-2.5 sm:py-3`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between">
-        {/* Logo */}
         <Link
           href="/"
-          onClick={() => {
+          onClick={(e) => {
+            handleNavClick('home', e);
             setIsOpen(false);
             setActiveSubMenu(null);
           }}
-          className="group flex items-center gap-2.5 cursor-pointer text-left shrink-0"
+          className="group inline-flex items-center gap-0 cursor-pointer text-left shrink-0"
           id="header-logo-btn"
         >
           <motion.div
-            className="group flex items-center gap-2.5 shrink-0"
+            className="group inline-flex items-center gap-0 shrink-0"
             whileHover="hover"
             initial="rest"
             animate="rest"
           >
-            {/* Orange Pf circle */}
             <motion.span
               variants={{ rest: { rotate: 0 }, hover: { rotate: 360 } }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="grid h-11 w-11 place-items-center rounded-full bg-[#FF5A1F] text-white font-bold text-[15px] tracking-tight shrink-0 shadow-sm"
+              className="relative grid h-10 w-10 sm:h-12 sm:w-12 place-items-center rounded-full bg-black shrink-0 shadow-sm overflow-hidden"
             >
-              Pf
+              <Image
+                src="/logo-3.png"
+                alt="Logo Icon"
+                width={48}
+                height={48}
+                className="object-cover w-full h-full scale-125"
+                priority
+              />
             </motion.span>
 
-            {/* pixelforte text */}
-            <span className="text-[26px] md:text-[28px] font-bold tracking-tight text-[#111] transition-colors group-hover:text-[#FF5A1F] whitespace-nowrap">
-              pixelforte
-            </span>
+            <div className="relative flex items-center h-12 sm:h-16 md:h-20 w-[180px] sm:w-[240px] md:w-[300px] -ml-2 sm:-ml-3 overflow-visible">
+              <Image
+                src="/logo-2.png"
+                alt="pixelforte logo"
+                fill
+                className="object-contain object-left scale-[1.5] sm:scale-[1.65] origin-left"
+                priority
+              />
+            </div>
           </motion.div>
         </Link>
 
-        {/* Right Controls */}
         <div className="flex items-center gap-4 sm:gap-6 shrink-0">
-          {/* Button: "Let's Collaborate" (hidden on small/mobile, visible on sm and up) */}
           <button
             onClick={() => {
               onContactClick();
               setIsOpen(false);
             }}
-            className="group relative hidden sm:inline-flex h-[44px] items-center justify-center overflow-hidden rounded-none bg-black px-6 text-[11px] md:text-[12px] font-bold uppercase tracking-wider text-white transition-all duration-500 cursor-pointer whitespace-nowrap shrink-0"
+            className="group relative hidden sm:inline-flex h-[40px] items-center justify-center overflow-hidden rounded-none bg-black px-5 text-[11px] font-bold uppercase tracking-wider text-white transition-all duration-500 cursor-pointer whitespace-nowrap shrink-0"
           >
-            {/* Dual sliding background (orange left, white right) */}
             <div className="absolute inset-0 w-full h-full flex translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0">
               <div className="w-1/2 h-full bg-[#f26b2c]" />
               <div className="w-1/2 h-full bg-white" />
             </div>
 
-            {/* Text Sliding Wrapper */}
             <span className="relative z-10 block h-4 overflow-hidden">
               <span className="block transform transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-full text-white">
                 Let&apos;s Collaborate
@@ -176,7 +182,6 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
             </span>
           </button>
 
-          {/* Trigger Button (4-Dot Icon or X) */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="group flex h-10 w-10 items-center justify-center text-black transition-transform duration-200 active:scale-95 cursor-pointer"
@@ -208,7 +213,6 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
         </div>
       </div>
 
-      {/* Right Aligned Dropdown Navigation Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -216,7 +220,7 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
             animate={{ height: 'auto', opacity: 1, scale: 1 }}
             exit={{ height: 0, opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute right-6 top-full z-50 w-[calc(100vw-48px)] max-w-[340px] overflow-hidden rounded-2xl border border-black/10 bg-[#f9f8f4] p-6 shadow-xl md:right-16 text-left"
+            className="absolute right-6 top-full z-50 w-[calc(100vw-48px)] max-w-[340px] overflow-hidden rounded-2xl border border-black/10 bg-[#f9f8f4] p-6 shadow-xl md:right-12 text-left"
           >
             <nav className="flex flex-col gap-2">
               {menuItems.map((item, index) => (
@@ -283,7 +287,6 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
               ))}
             </nav>
 
-            {/* Bottom Contacts Section */}
             <div className="mt-4 border-t border-black/[0.06] pt-4 text-[11px] text-gray-400 text-left">
               <a
                 href="mailto:info@example.com"
@@ -297,7 +300,6 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
                 94025, USA
               </p>
 
-              {/* Mobile/Small Screen Button: "Let's Collaborate" */}
               <div className="mt-4 pt-4 border-t border-black/[0.04] sm:hidden">
                 <button
                   onClick={() => {
@@ -306,13 +308,11 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
                   }}
                   className="w-full group relative inline-flex h-[38px] items-center justify-center overflow-hidden rounded-none bg-black px-5 text-[11px] font-bold uppercase tracking-wider text-white transition-all duration-500 cursor-pointer"
                 >
-                  {/* Dual sliding background (orange left, white right) */}
                   <div className="absolute inset-0 w-full h-full flex translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0">
                     <div className="w-1/2 h-full bg-[#f26b2c]" />
                     <div className="w-1/2 h-full bg-white" />
                   </div>
 
-                  {/* Text Sliding Wrapper */}
                   <span className="relative z-10 block h-4 overflow-hidden">
                     <span className="block transform transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-full text-white">
                       Let&apos;s Collaborate
@@ -330,4 +330,3 @@ export default function Header ({ activePage, setActivePage, onContactClick, tra
     </header>
   );
 }
-

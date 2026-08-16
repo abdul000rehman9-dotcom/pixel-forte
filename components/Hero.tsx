@@ -125,6 +125,7 @@ export default function Hero() {
   const headlineRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLAnchorElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const introBlockRef = useRef<HTMLDivElement>(null);
 
   const duplicatedCards = [...CARDS_DATA, ...CARDS_DATA, ...CARDS_DATA];
 
@@ -152,6 +153,20 @@ export default function Hero() {
           scale: 1,
           opacity: 1,
           duration: 0.4,
+          ease: "power2.out",
+        }
+      );
+    }
+
+    if (introBlockRef.current) {
+      gsap.fromTo(
+        introBlockRef.current,
+        { opacity: 0, y: 18 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: 0.25,
           ease: "power2.out",
         }
       );
@@ -204,8 +219,8 @@ export default function Hero() {
     word.split("").map((ch, i) => (
       <span
         key={`${word}-${i}`}
-        className="inline-block overflow-visible align-bottom pb-3"
-        style={{ lineHeight: "1.1" }}
+        className="inline-block overflow-visible align-bottom pb-1"
+        style={{ lineHeight: "0.98" }}
       >
         <span
           data-char
@@ -220,7 +235,7 @@ export default function Hero() {
   const renderLine = (line: string) => {
     const words = line.split(" ");
     return (
-      <span className="flex flex-wrap items-end justify-center gap-x-[0.28em] overflow-visible">
+      <span className="flex flex-wrap items-end justify-center gap-x-[0.25em] overflow-visible">
         {words.map((w, i) => (
           <span key={i} className="inline-flex overflow-visible">
             {renderWord(w, i * 0.04)}
@@ -231,20 +246,20 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative flex w-full flex-col items-center justify-start overflow-hidden bg-[#fbf9f4] pt-20 pb-12 px-4 text-center select-none gap-2">
+    <section className="relative flex w-full flex-col items-center justify-start overflow-hidden bg-[#fbf9f4] pt-14 sm:pt-16 pb-12 px-4 text-center select-none gap-2">
       <div
         ref={headlineRef}
         className="relative z-10 max-w-5xl mx-auto flex flex-col items-center w-full overflow-visible"
       >
-        <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-black font-sans leading-[1.1] py-2 overflow-visible">
+        <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[100px] xl:text-[110px] font-bold tracking-tight text-black font-sans leading-[0.98] py-1 overflow-visible">
           <span className="block overflow-visible">{renderLine("Branding through")}</span>
-          <span className="block mt-1 overflow-visible">{renderLine("brilliant design")}</span>
+          <span className="block -mt-1 sm:-mt-2 overflow-visible">{renderLine("brilliant design")}</span>
         </h1>
 
         <a
           ref={buttonRef}
           href="#contact"
-          className="group relative inline-flex h-[48px] sm:h-[50px] items-center justify-center overflow-hidden rounded-none bg-black px-8 text-[13px] sm:text-[14px] font-bold uppercase tracking-wider text-white transition-colors duration-300 mt-6 sm:mt-8"
+          className="group relative inline-flex h-[46px] sm:h-[48px] items-center justify-center overflow-hidden rounded-none bg-black px-7 sm:px-8 text-[12px] sm:text-[13px] font-bold uppercase tracking-wider text-white transition-colors duration-300 mt-4 sm:mt-5"
         >
           <span className="absolute inset-0 h-full w-full translate-y-full bg-[#f26b2c] transition-transform duration-300 ease-out group-hover:translate-y-0"></span>
           <span className="relative z-10 block h-4 overflow-hidden">
@@ -258,7 +273,7 @@ export default function Hero() {
         </a>
       </div>
 
-      <div className="hidden md:flex relative w-full overflow-visible mt-14 sm:mt-16 mb-4 justify-center items-start h-[330px]">
+      <div className="hidden md:flex relative w-full overflow-visible mt-8 sm:mt-10 mb-4 justify-center items-start h-[330px]">
         <div
           ref={sliderRef}
           className="flex gap-6 absolute left-0 items-start will-change-transform"
@@ -270,13 +285,16 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="md:hidden grid grid-cols-2 gap-4 w-full max-w-sm mx-auto mt-8 mb-6">
+      <div className="md:hidden grid grid-cols-2 gap-4 w-full max-w-sm mx-auto mt-6 mb-4">
         {mobileCards.map((card, index) => (
           <HeroCard key={card.id} card={card} index={index} isMobile />
         ))}
       </div>
 
-      <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center gap-4 sm:gap-5 mt-14 sm:mt-18 md:mt-20 mb-4 px-4 clear-both">
+      <div 
+        ref={introBlockRef}
+        className="relative z-10 max-w-2xl mx-auto flex flex-col items-center gap-4 sm:gap-5 mt-14 sm:mt-18 md:mt-20 mb-4 px-4 clear-both opacity-0 will-change-transform"
+      >
         <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center">
           <Image
             src={rotateIcon}
