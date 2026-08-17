@@ -13,9 +13,9 @@ const config: Config = {
         ink: "#0A0A0A",
       },
       fontFamily: {
-        sans: ["WebsiteCustomFont", "Satoshi", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
-        display: ["WebsiteCustomFont", "Satoshi", "sans-serif"],
-        mono: ["WebsiteCustomFont", "Satoshi", "monospace"],
+        sans: ["var(--font-parkinsans)", "Parkinsans", "WebsiteCustomFont", "Satoshi", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        display: ["var(--font-parkinsans)", "Parkinsans", "WebsiteCustomFont", "Satoshi", "sans-serif"],
+        mono: ["var(--font-parkinsans)", "Parkinsans", "WebsiteCustomFont", "Satoshi", "monospace"],
       },
       transitionTimingFunction: {
         smooth: "cubic-bezier(0.22,1,0.36,1)",

@@ -2,20 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fonts located in public/fonts folder with comprehensive format support */
+/* Parkinsans Fonts located in public/fonts folder */
+@font-face {
+  font-family: 'Parkinsans';
+  src: url('/fonts/Parkinsans-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Parkinsans';
+  src: url('/fonts/static/Parkinsans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Parkinsans';
+  src: url('/fonts/static/Parkinsans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Parkinsans';
+  src: url('/fonts/static/Parkinsans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Parkinsans';
+  src: url('/fonts/static/Parkinsans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Parkinsans';
+  src: url('/fonts/static/Parkinsans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Parkinsans';
+  src: url('/fonts/static/Parkinsans-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Alias WebsiteCustomFont to Parkinsans for backward compatibility */
 @font-face {
   font-family: 'WebsiteCustomFont';
-  src: url('/fonts/font.woff2') format('woff2'),
-       url('/fonts/font.woff') format('woff'),
-       url('/fonts/font.ttf') format('truetype'),
-       url('/fonts/font.otf') format('opentype'),
-       url('/fonts/CustomFont.woff2') format('woff2'),
-       url('/fonts/CustomFont.ttf') format('truetype'),
-       url('/fonts/Satoshi-Variable.woff2') format('woff2'),
-       url('/fonts/Satoshi-Regular.woff2') format('woff2'),
-       url('/fonts/Satoshi.woff2') format('woff2'),
-       url('/fonts/Satoshi.ttf') format('truetype'),
-       local('WebsiteCustomFont');
+  src: url('/fonts/Parkinsans-VariableFont_wght.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -36,18 +83,19 @@
 }
 
 :root {
-  --font-custom: 'WebsiteCustomFont', 'Satoshi', sans-serif;
-  --font-satoshi: 'WebsiteCustomFont', 'Satoshi', sans-serif;
+  --font-parkinsans: 'Parkinsans', sans-serif;
+  --font-custom: 'Parkinsans', sans-serif;
+  --font-satoshi: 'Parkinsans', sans-serif;
 }
 
 *, ::before, ::after {
   box-sizing: border-box;
-  font-family: 'WebsiteCustomFont', 'Satoshi', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-parkinsans), 'Parkinsans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
-  font-family: 'WebsiteCustomFont', 'Satoshi', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-parkinsans), 'Parkinsans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 /* Force parent elements to allow sticky children to work */
 html, body, main {
@@ -59,7 +107,7 @@ body {
   background: #f4f1ea;
   color: #000;
   overflow-x: hidden;
-  font-family: 'WebsiteCustomFont', 'Satoshi', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-parkinsans), 'Parkinsans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 * {
