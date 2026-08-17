@@ -132,7 +132,11 @@ export default function About() {
       className="relative overflow-hidden bg-[#faf8f3] px-6 pt-20 pb-16 sm:px-12 lg:px-20 lg:pt-28 lg:pb-24 z-10"
     >
       {/* 3D Rotating Right Side Graphic */}
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8, y: 30 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="hidden lg:block absolute right-[2%] xl:right-[4%] top-[20%] lg:top-[24%] xl:top-[26%] z-0 pointer-events-none w-[260px] h-[260px] lg:w-[300px] lg:h-[300px] xl:w-[340px] xl:h-[340px] animate-spin-continuous"
         aria-hidden="true"
       >
@@ -142,11 +146,17 @@ export default function About() {
           fill
           className="object-contain"
         />
-      </div>
+      </motion.div>
 
       <div className="relative z-10 mx-auto max-w-[1550px]">
         {/* Mobile/Tablet Rotating Star Graphic */}
-        <div className="block lg:hidden mb-6 text-left">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.85, y: 20 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="block lg:hidden mb-6 text-left"
+        >
           <div
             className="w-[52px] h-[52px] sm:w-[64px] sm:h-[64px] relative pointer-events-none animate-spin-continuous"
             aria-hidden="true"
@@ -158,13 +168,25 @@ export default function About() {
               className="object-contain"
             />
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mb-6 text-xs font-bold uppercase tracking-[0.25em] text-neutral-400">
+        <motion.div 
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.2, once: false }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-6 text-xs font-bold uppercase tracking-[0.25em] text-neutral-400"
+        >
           About Us
-        </div>
+        </motion.div>
 
-        <div className="max-w-full lg:max-w-[60%] xl:max-w-[55%]">
+        <motion.div 
+          initial={{ opacity: 0, y: 65 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.2, once: false }}
+          transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-full lg:max-w-[60%] xl:max-w-[55%]"
+        >
           <h2 className="font-display text-[1.4rem] sm:text-[2rem] lg:text-[2.6rem] font-bold leading-[1.2] tracking-[-0.02em]">
             <motion.span style={{ color: textOpacity1 }}>
               We help brands express their vision through{" "}
@@ -188,7 +210,13 @@ export default function About() {
             {/* UPDATED AVATARS + PLUS BUTTON SECTION */}
             <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
               {/* 1st Image: Square */}
-              <div className="h-16 w-16 sm:h-20 sm:w-20 overflow-hidden rounded-xl sm:rounded-2xl shadow-sm bg-neutral-200 shrink-0 relative">
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ amount: 0.2, once: false }}
+                transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+                className="h-16 w-16 sm:h-20 sm:w-20 overflow-hidden rounded-xl sm:rounded-2xl shadow-sm bg-neutral-200 shrink-0 relative"
+              >
                 <Image
                   src={AVATARS[0].src}
                   alt="Team member 1"
@@ -197,10 +225,16 @@ export default function About() {
                   className="object-cover"
                   referrerPolicy="no-referrer"
                 />
-              </div>
+              </motion.div>
 
               {/* 2nd Image: Circle (Middle) */}
-              <div className="h-16 w-16 sm:h-20 sm:w-20 overflow-hidden rounded-full shadow-sm bg-neutral-200 shrink-0 relative">
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ amount: 0.2, once: false }}
+                transition={{ duration: 0.85, delay: 0.23, ease: [0.22, 1, 0.36, 1] }}
+                className="h-16 w-16 sm:h-20 sm:w-20 overflow-hidden rounded-full shadow-sm bg-neutral-200 shrink-0 relative"
+              >
                 <Image
                   src={AVATARS[1].src}
                   alt="Team member 2"
@@ -209,10 +243,16 @@ export default function About() {
                   className="object-cover"
                   referrerPolicy="no-referrer"
                 />
-              </div>
+              </motion.div>
 
               {/* 3rd Image: Square */}
-              <div className="h-16 w-16 sm:h-20 sm:w-20 overflow-hidden rounded-xl sm:rounded-2xl shadow-sm bg-neutral-200 shrink-0 relative">
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ amount: 0.2, once: false }}
+                transition={{ duration: 0.85, delay: 0.31, ease: [0.22, 1, 0.36, 1] }}
+                className="h-16 w-16 sm:h-20 sm:w-20 overflow-hidden rounded-xl sm:rounded-2xl shadow-sm bg-neutral-200 shrink-0 relative"
+              >
                 <Image
                   src={AVATARS[2].src}
                   alt="Team member 3"
@@ -221,25 +261,39 @@ export default function About() {
                   className="object-cover"
                   referrerPolicy="no-referrer"
                 />
-              </div>
+              </motion.div>
 
               {/* 4th Element: Orange Circle Plus Button */}
-              <button 
+              <motion.button 
                 type="button"
                 aria-label="View all team members"
+                initial={{ opacity: 0, scale: 0.85, y: 50 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ amount: 0.2, once: false }}
+                transition={{ duration: 0.85, delay: 0.39, ease: [0.22, 1, 0.36, 1] }}
                 className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-[#f26b2c] text-white text-2xl sm:text-3xl font-light hover:scale-105 transition-transform shadow-sm shrink-0 cursor-pointer"
               >
                 +
-              </button>
+              </motion.button>
             </div>
 
-            <p className="text-[0.95rem] sm:text-[1rem] leading-[1.6] text-neutral-500 font-normal">
+            <motion.p 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ amount: 0.2, once: false }}
+              transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="text-[0.95rem] sm:text-[1rem] leading-[1.6] text-neutral-500 font-normal"
+            >
               We help brands bring their vision to life through design,
               storytelling, and strategy, creating impactful experiences that
               engage audiences and strengthen brand identity.
-            </p>
+            </motion.p>
 
-            <a
+            <motion.a
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ amount: 0.2, once: false }}
+              transition={{ duration: 0.85, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
               href="#contact"
               className="group relative inline-flex h-[36px] items-center justify-center overflow-hidden rounded-none bg-black px-5 text-[11px] font-bold uppercase tracking-wider text-white transition-colors duration-300"
             >
@@ -252,9 +306,9 @@ export default function About() {
                   Learn More
                 </span>
               </span>
-            </a>
+            </motion.a>
           </div>
-        </div>
+        </motion.div>
 
         {/* Lower Row Section */}
         <div 
@@ -262,7 +316,13 @@ export default function About() {
           className="mt-8 sm:mt-10 pt-6 border-t border-neutral-200/70 flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-4 items-center"
         >
           {/* 1. Stats Numbering Column */}
-          <div className="order-1 md:order-2 md:col-span-4 lg:col-span-4 flex items-center gap-6 sm:gap-8 justify-start w-full pb-4 md:pb-0 border-b md:border-b-0 border-neutral-200/60">
+          <motion.div 
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.2, once: false }}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="order-1 md:order-2 md:col-span-4 lg:col-span-4 flex items-center gap-6 sm:gap-8 justify-start w-full pb-4 md:pb-0 border-b md:border-b-0 border-neutral-200/60"
+          >
             <div>
               <div className="font-display text-[2.2rem] sm:text-[3rem] lg:text-[3.2rem] font-bold leading-none tracking-tighter text-neutral-900 flex items-center">
                 <Counter value={98} />%
@@ -282,24 +342,34 @@ export default function About() {
                 Brands transformed
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* 2. Mobile Bottom Section / Desktop Columns */}
           <div className="order-2 w-full flex items-center justify-between gap-4 md:contents">
             {/* Pill Buttons Div */}
             <div className="md:order-1 md:col-span-4 lg:col-span-3 flex flex-col items-start gap-1.5">
-              {PILLS.map((pill) => (
-                <span
+              {PILLS.map((pill, idx) => (
+                <motion.span
                   key={pill}
+                  initial={{ opacity: 0, y: 35 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ amount: 0.2, once: false }}
+                  transition={{ duration: 0.75, delay: 0.15 + idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
                   className="rounded-full border border-neutral-300 px-3 sm:px-4 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-neutral-800 bg-white/60 backdrop-blur-sm"
                 >
                   {pill}
-                </span>
+                </motion.span>
               ))}
             </div>
 
             {/* Stacked Images Container */}
-            <div className="md:order-3 md:col-span-4 lg:col-span-5 flex items-center justify-end lg:justify-center pr-6 xs:pr-8 sm:pr-10 md:pr-0 overflow-visible">
+            <motion.div 
+              initial={{ opacity: 0, y: 55 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ amount: 0.2, once: false }}
+              transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="md:order-3 md:col-span-4 lg:col-span-5 flex items-center justify-end lg:justify-center pr-6 xs:pr-8 sm:pr-10 md:pr-0 overflow-visible"
+            >
               <div className="relative w-[65px] xs:w-[75px] sm:w-[90px] md:w-[105px] lg:w-[125px] aspect-[1.35/1] flex-shrink-0">
                 
                 {/* Card 3 */}
@@ -368,7 +438,7 @@ export default function About() {
                 </motion.div>
 
               </div>
-            </div>
+            </motion.div>
           </div>
 
         </div>

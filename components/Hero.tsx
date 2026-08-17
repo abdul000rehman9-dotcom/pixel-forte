@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 import rotateIcon from "@/public/icons/idotive-icon-8.svg";
 
@@ -273,7 +274,12 @@ export default function Hero() {
         </a>
       </div>
 
-      <div className="hidden md:flex relative w-full overflow-visible mt-8 sm:mt-10 mb-4 justify-center items-start h-[330px]">
+      <motion.div 
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        className="hidden md:flex relative w-full overflow-visible mt-8 sm:mt-10 mb-4 justify-center items-start h-[330px]"
+      >
         <div
           ref={sliderRef}
           className="flex gap-6 absolute left-0 items-start will-change-transform"
@@ -283,19 +289,40 @@ export default function Hero() {
             <HeroCard key={`${card.id}-${index}`} card={card} index={index} />
           ))}
         </div>
-      </div>
+      </motion.div>
 
-      <div className="md:hidden grid grid-cols-2 gap-4 w-full max-w-sm mx-auto mt-6 mb-4">
-        {mobileCards.map((card, index) => (
-          <HeroCard key={card.id} card={card} index={index} isMobile />
-        ))}
-      </div>
-
-      <div 
-        ref={introBlockRef}
-        className="relative z-10 max-w-2xl mx-auto flex flex-col items-center gap-4 sm:gap-5 mt-14 sm:mt-18 md:mt-20 mb-4 px-4 clear-both opacity-0 will-change-transform"
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        className="md:hidden grid grid-cols-2 gap-4 w-full max-w-sm mx-auto mt-6 mb-4"
       >
-        <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center">
+        {mobileCards.map((card, index) => (
+          <motion.div
+            key={card.id}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <HeroCard card={card} index={index} isMobile />
+          </motion.div>
+        ))}
+      </motion.div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ amount: 0.2, once: false }}
+        transition={{ duration: 0.95, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 max-w-2xl mx-auto flex flex-col items-center gap-4 sm:gap-5 mt-14 sm:mt-18 md:mt-20 mb-4 px-4 clear-both will-change-transform"
+      >
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8, y: 40 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ amount: 0.2, once: false }}
+          transition={{ duration: 0.95, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center"
+        >
           <Image
             src={rotateIcon}
             alt="Rotating Icon"
@@ -303,12 +330,18 @@ export default function Hero() {
             height={64}
             className="animate-spin-continuous object-contain w-full h-full"
           />
-        </div>
-        <p className="text-sm sm:text-[15px] font-normal leading-relaxed text-neutral-600 max-w-xl text-center">
+        </motion.div>
+        <motion.p 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.2, once: false }}
+          transition={{ duration: 0.95, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="text-sm sm:text-[15px] font-normal leading-relaxed text-neutral-600 max-w-xl text-center"
+        >
           We turn bold ideas into impactful brand experiences that inspire audiences, evoke emotion,
           and deliver measurable results through creativity and strategic design.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     </section>
   );
 }
