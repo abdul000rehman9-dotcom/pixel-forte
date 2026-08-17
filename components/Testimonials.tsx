@@ -56,11 +56,17 @@ export default function Testimonials() {
   const item = testimonials[current];
 
   return (
-    <section className="px-6 sm:px-10 py-12 sm:py-20">
+    <section className="px-6 sm:px-10 py-12 sm:py-20 overflow-hidden">
       <div className="mx-auto max-w-[1600px] grid grid-cols-1 lg:grid-cols-[0.9fr_1fr_90px] gap-10 lg:gap-16 items-stretch">
         
         {/* IMAGE */}
-        <div className="relative h-[320px] sm:h-[450px] lg:h-[700px] overflow-hidden rounded-[18px]">
+        <motion.div 
+          initial={{ opacity: 0, y: 70 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.2, once: false }}
+          transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
+          className="relative h-[320px] sm:h-[450px] lg:h-[700px] overflow-hidden rounded-[18px]"
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={item.name} 
@@ -80,10 +86,16 @@ export default function Testimonials() {
               />
             </motion.div>
           </AnimatePresence>
-        </div>
+        </motion.div>
 
         {/* CONTENT */}
-        <div className="h-auto lg:h-[700px] flex flex-col justify-center text-left">
+        <motion.div 
+          initial={{ opacity: 0, y: 70 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.2, once: false }}
+          transition={{ duration: 0.95, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="h-auto lg:h-[700px] flex flex-col justify-center text-left"
+        >
           <span className="text-[13px] uppercase tracking-[0.3em] text-neutral-500">
             Testimonial
           </span>
@@ -118,10 +130,16 @@ export default function Testimonials() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* SIDE SLIDER / RESPONSIVE CONTROLS (DESKTOP ONLY) */}
-        <div className="hidden lg:flex h-[700px] flex-col items-center justify-between">
+        <motion.div 
+          initial={{ opacity: 0, y: 70 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.2, once: false }}
+          transition={{ duration: 0.95, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="hidden lg:flex h-[700px] flex-col items-center justify-between"
+        >
           <button
             onClick={prev}
             className="w-12 h-12 rounded-md bg-black text-white flex items-center justify-center hover:bg-neutral-800 transition-colors"
@@ -155,10 +173,16 @@ export default function Testimonials() {
           >
             ↓
           </button>
-        </div>
+        </motion.div>
 
         {/* Mobile controls - Simple dots & next/prev buttons (MOBILE ONLY) */}
-        <div className="flex lg:hidden items-center justify-between gap-4 mt-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex lg:hidden items-center justify-between gap-4 mt-4"
+        >
           <button
             onClick={prev}
             className="w-10 h-10 rounded-md bg-black text-white flex items-center justify-center font-bold text-lg active:scale-95 transition-transform"
@@ -184,7 +208,7 @@ export default function Testimonials() {
           >
             →
           </button>
-        </div>
+        </motion.div>
 
       </div>
     </section>

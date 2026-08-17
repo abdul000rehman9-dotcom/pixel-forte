@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function BenefitsBento() {
   const router = useRouter();
@@ -23,7 +24,13 @@ export default function BenefitsBento() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
           
           {/* Header & Subtext */}
-          <div className="flex flex-col justify-between py-2">
+          <motion.div 
+            initial={{ opacity: 0, y: 70 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.25, once: false }}
+            transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col justify-between py-2"
+          >
             <div className="space-y-6">
               <h2 className="font-display font-extrabold text-3xl md:text-4xl lg:text-[42px] leading-[1.15] text-black tracking-tight">
                 Transforming ideas into measurable success
@@ -40,10 +47,14 @@ export default function BenefitsBento() {
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 1: Multi-industry experience */}
-          <div 
+          <motion.div 
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.25, once: false }}
+            transition={{ duration: 0.95, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
             onClick={() => handleNavigation('services')}
             className="bg-white rounded-[20px] p-8 shadow-sm border border-black/5 hover:shadow-lg transition-all duration-300 flex flex-col justify-between min-h-[360px] group cursor-pointer relative overflow-hidden"
           >
@@ -74,10 +85,14 @@ export default function BenefitsBento() {
                 Learn More
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 2: End-to-end solutions */}
-          <div 
+          <motion.div 
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.25, once: false }}
+            transition={{ duration: 0.95, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
             onClick={() => handleNavigation('services')}
             className="bg-white rounded-[20px] p-8 shadow-sm border border-black/5 hover:shadow-lg transition-all duration-300 flex flex-col justify-between min-h-[360px] group cursor-pointer relative overflow-hidden"
           >
@@ -108,7 +123,7 @@ export default function BenefitsBento() {
                 Learn More
               </span>
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
@@ -116,7 +131,11 @@ export default function BenefitsBento() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
           
           {/* Card 3: Strategy meets creativity */}
-          <div 
+          <motion.div 
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.25, once: false }}
+            transition={{ duration: 0.95, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
             onClick={() => handleNavigation('services')}
             className="order-1 lg:order-2 bg-white rounded-[20px] p-8 shadow-sm border border-black/5 hover:shadow-lg transition-all duration-300 flex flex-col justify-between min-h-[360px] group cursor-pointer relative overflow-hidden"
           >
@@ -147,10 +166,14 @@ export default function BenefitsBento() {
                 Learn More
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 4: Results that matter */}
-          <div 
+          <motion.div 
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.25, once: false }}
+            transition={{ duration: 0.95, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
             onClick={() => handleNavigation('services')}
             className="order-2 lg:order-3 bg-white rounded-[20px] p-8 shadow-sm border border-black/5 hover:shadow-lg transition-all duration-300 flex flex-col justify-between min-h-[360px] group cursor-pointer relative overflow-hidden"
           >
@@ -181,10 +204,16 @@ export default function BenefitsBento() {
                 Learn More
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Bottom Avatars / Stats (Placed at bottom left on desktop) */}
-          <div className="order-3 lg:order-1 flex flex-col justify-end py-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 70 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.25, once: false }}
+            transition={{ duration: 0.95, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            className="order-3 lg:order-1 flex flex-col justify-end py-4"
+          >
             <div className="space-y-3">
               <div className="flex items-center -space-x-3">
                 <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden relative shadow-md bg-neutral-200">
@@ -204,10 +233,16 @@ export default function BenefitsBento() {
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Explore All Circle Button */}
-          <div className="order-4 lg:order-4 flex justify-center items-center py-4">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8, y: 70 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ amount: 0.25, once: false }}
+            transition={{ duration: 0.95, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="order-4 lg:order-4 flex justify-center items-center py-4"
+          >
             <div
               onClick={() => handleNavigation('services')}
               className="w-40 h-40 md:w-44 md:h-44 rounded-full border border-black/20 bg-transparent flex flex-col items-center justify-center text-black hover:bg-black hover:text-white transition-all duration-300 cursor-pointer select-none group"
@@ -217,7 +252,7 @@ export default function BenefitsBento() {
                 Explore All
               </span>
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
