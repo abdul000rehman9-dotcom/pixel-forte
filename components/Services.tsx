@@ -85,25 +85,10 @@ export function Services() {
   return (
     <section className="bg-[#f4f1ea] py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="mx-auto w-full max-w-[94%] sm:max-w-[92%] lg:max-w-[90%]">
-        <motion.p 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ amount: 0.2, once: false }}
-          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center text-[10px] sm:text-xs tracking-[0.3em] text-neutral-500 uppercase"
-        >
-          Our Services
-        </motion.p>
-
-        <motion.h2 
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ amount: 0.2, once: false }}
-          transition={{ duration: 0.95, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-4 text-center font-serif text-3xl sm:text-4xl md:text-6xl text-neutral-900 leading-[1.1] sm:leading-[1.05]"
-        >
+        <p className="text-center text-[10px] sm:text-xs tracking-[0.3em] text-neutral-500 uppercase">Our Services</p>
+        <h2 className="mt-4 text-center font-serif text-3xl sm:text-4xl md:text-6xl text-neutral-900 leading-[1.1] sm:leading-[1.05]">
           Where creative thinking meets<br className="hidden sm:inline" /> strategic brand impact
-        </motion.h2>
+        </h2>
 
         {/* space-y-14 provides physical clearance for the 3D rotation */}
         <div className="mt-14 sm:mt-20 space-y-10 sm:space-y-14 w-full">
@@ -120,16 +105,12 @@ export function Services() {
             }
 
             return (
-              <motion.div
+              <div
                 key={s.n}
-                initial={{ opacity: 0, y: 70 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ amount: 0.25, once: false }}
-                transition={{ duration: 0.95, delay: i * 0.14, ease: [0.22, 1, 0.36, 1] }}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 onClick={() => handleCardClick(i)}
-                className="relative w-full cursor-pointer select-none"
+                className="relative w-full cursor-pointer select-none animate-none"
                 style={{ 
                   perspective: "1800px", 
                   height: `${boxHeight}px`,
@@ -225,7 +206,7 @@ export function Services() {
                     <span className="font-serif text-neutral-400 italic text-lg">{s.title}</span>
                   </div>
                 </motion.div>
-              </motion.div>
+              </div>
             );
           })}
         </div>

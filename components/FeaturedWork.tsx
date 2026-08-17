@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
 import Link from "next/link"; 
-import { motion } from "framer-motion";
 
 export default function FeaturedWork() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -16,51 +15,47 @@ export default function FeaturedWork() {
 
     const chars = headlineRef.current.querySelectorAll<HTMLElement>("[data-char]");
     
-    gsap.set(chars, { yPercent: 60, opacity: 0 });
-    gsap.set(paraRef.current, { y: 35, opacity: 0 });
+    // FIXED: Reduced translation to avoid giant vertical ghost gaps before reveal
+    gsap.set(chars, { yPercent: 40, opacity: 0 });
+    gsap.set(paraRef.current, { y: 10, opacity: 0 });
 
-    const headlineObserver = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            gsap.to(chars, {
+            const tl = gsap.timeline();
+            
+            tl.to(chars, {
               yPercent: 0,
               opacity: 1,
-              duration: 0.8,
+              duration: 0.6,
               ease: "power3.out",
-              stagger: 0.02,
+              stagger: 0.015,
             });
-            headlineObserver.disconnect();
+
+            tl.to(
+              paraRef.current,
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.5,
+                ease: "power2.out",
+              },
+              "-=0.3"
+            );
+
+            observer.disconnect();
           }
         });
       },
-      { threshold: 0.2, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0.01 }
     );
 
-    const paraObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            gsap.to(paraRef.current, {
-              y: 0,
-              opacity: 1,
-              duration: 0.85,
-              ease: "power3.out",
-            });
-            paraObserver.disconnect();
-          }
-        });
-      },
-      { threshold: 0.2, rootMargin: "0px 0px -40px 0px" }
-    );
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
 
-    headlineObserver.observe(headlineRef.current);
-    paraObserver.observe(paraRef.current);
-
-    return () => {
-      headlineObserver.disconnect();
-      paraObserver.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
 
   const renderWord = (word: string, baseDelay: number) =>
@@ -115,13 +110,7 @@ export default function FeaturedWork() {
         </h2>
         
         {/* Divider line below both Featured and work text */}
-        <motion.div 
-          initial={{ opacity: 0, scaleY: 0 }}
-          whileInView={{ opacity: 1, scaleY: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-          className="mx-auto my-6 sm:my-8 h-8 sm:h-10 w-px bg-black/20 origin-top" 
-        />
+        <div className="mx-auto my-6 sm:my-8 h-8 sm:h-10 w-px bg-black/20" />
         
         {/* Animated Paragraph */}
         <p ref={paraRef} className="mx-auto max-w-xl text-center text-black/70 text-sm sm:text-base will-change-transform">
@@ -140,14 +129,12 @@ export default function FeaturedWork() {
               tags={["Brand guidelines", "Editorial design"]}
               marqueeLabel="Experiential design"
               big
-              delay={0.1}
             />
             <WorkCard
               img="/images/img_11.webp"
               tag="Visionary designs"
               tags={["Corporate identity", "Campaign print"]}
               marqueeLabel="Visionary designs"
-              delay={0.2}
             />
           </div>
 
@@ -160,7 +147,6 @@ export default function FeaturedWork() {
                 tags={["Logo System", "Marketing Collateral"]}
                 marqueeLabel="Strategic Brands"
                 big
-                delay={0.1}
               />
             </div>
           </div>
@@ -172,7 +158,6 @@ export default function FeaturedWork() {
               tag="Advertising with edge"
               tags={["Corporate identity", "Campaign print"]}
               marqueeLabel="Advertising campaigns"
-              delay={0.1}
             />
             <WorkCard
               img="/images/card14.webp"
@@ -180,7 +165,6 @@ export default function FeaturedWork() {
               tags={["Brand identity", "Print design"]}
               marqueeLabel="Interactive campaigns"
               big
-              delay={0.2}
             />
           </div>
         </div>
@@ -195,24 +179,18 @@ interface WorkCardProps {
   tags: string[];
   marqueeLabel: string;
   big?: boolean;
-  delay?: number;
 }
 
-function WorkCard({ img, tag, tags, marqueeLabel, big = false, delay = 0 }: WorkCardProps) {
+function WorkCard({ img, tag, tags, marqueeLabel, big = false }: WorkCardProps) {
   return (
-    <motion.article 
-      initial={{ opacity: 0, y: 75 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ amount: 0.2, once: false }}
-      transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="group cursor-pointer w-full"
-    >
+    <article className="group cursor-pointer w-full">
       <div className={`zoom-wrap relative ${big ? "h-[260px] sm:h-[340px] md:h-[440px]" : "h-[210px] sm:h-[260px] md:h-[290px]"} overflow-hidden rounded-2xl bg-neutral-200/50`}>
         <Image
           src={img}
           alt={tag}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 700px"
+          loading="lazy"
           className="object-cover transition-all duration-500 lg:group-hover:blur-[6px]"
           referrerPolicy="no-referrer"
         />
@@ -251,6 +229,6 @@ function WorkCard({ img, tag, tags, marqueeLabel, big = false, delay = 0 }: Work
           →
         </Link>
       </div>
-    </motion.article>
+    </article>
   );
 }
